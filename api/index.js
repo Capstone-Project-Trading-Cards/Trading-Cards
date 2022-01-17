@@ -6,13 +6,14 @@ const mongoose = require("mongoose");
 
 // import routes
 const cardsRoute = require("./routes/cards");
+const userRoute = require("./routes/user");
 
 // server setup
 const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // connect to database
 mongoose
@@ -22,6 +23,7 @@ mongoose
 
 // routes
 app.use("/api/cards", cardsRoute);
+app.use("/api/user", userRoute);
 
 // creating server
 app.listen(process.env.PORT || 5000, () =>

@@ -13,51 +13,6 @@
   transition: 200ms ease-in;
 }
 
-.bas-player-card {
-  position: relative;
-  width: 340px;
-  height: 500px;
-  background-image: url(/static/images/fifa-background6.png);
-  background-position: center center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  padding: 3.6rem 0;
-  z-index: 2;
-  -webkit-transition: 200ms ease-in;
-  -o-transition: 200ms ease-in;
-  transition: 200ms ease-in;
-}
-
-.nhl-player-card {
-  position: relative;
-  width: 340px;
-  height: 500px;
-  background-image: url(/static/images/fifa-background2.png);
-  background-position: center center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  padding: 3.6rem 0;
-  z-index: 2;
-  -webkit-transition: 200ms ease-in;
-  -o-transition: 200ms ease-in;
-  transition: 200ms ease-in;
-}
-
-.nfl-player-card {
-  position: relative;
-  width: 340px;
-  height: 500px;
-  background-image: url(/static/images/fifa-background3.png);
-  background-position: center center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  padding: 3.6rem 0;
-  z-index: 2;
-  -webkit-transition: 200ms ease-in;
-  -o-transition: 200ms ease-in;
-  transition: 200ms ease-in;
-}
-
 .fut-player-card .player-card-top {
   position: relative;
   display: -webkit-box;

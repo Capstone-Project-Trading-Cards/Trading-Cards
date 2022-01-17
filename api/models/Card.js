@@ -10,7 +10,13 @@ const CardSchema = mongoose.Schema(
     tier: { type: String, required: true },
     price: { type: Number, required: true },
     // owner of the card it is connected to our User model
-    owner: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    owner: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: "tradingcards.co",
+      },
+    ],
     // when user puts the cards up for trade switch to true, it is false as default
     availableToTrade: { type: Boolean, required: true, default: false },
   },
