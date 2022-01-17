@@ -26,7 +26,7 @@ router.post("/add", async (req, res) => {
 // show card
 router.get("/:id", async (req, res) => {
   try {
-    const card = Card.findById(req.params.id);
+    const card = await Card.findById(req.params.id);
     res.status(200).send(card);
   } catch (err) {
     res.status(500).send(err);
@@ -63,7 +63,7 @@ router.post("/:id", async (req, res) => {
 // basically change the ownership of the card
 router.post("buy/:id", async (req, res) => {
   try {
-    const Card = Card.findByIdAndUpdate(
+    const Card = await Card.findByIdAndUpdate(
       req.params.id,
       { owner: { $set: req.body } },
       { new: true }
