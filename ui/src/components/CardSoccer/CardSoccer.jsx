@@ -1,7 +1,7 @@
 import React from "react";
 import "./CardSoccer.css";
 
-export default function Card() {
+export default function CardSoccer() {
   return (
     <div>
       <div className="fut-player-card">

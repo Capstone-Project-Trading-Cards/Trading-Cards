@@ -1,25 +1,16 @@
-import CardSoccer from "./components/CardSoccer/CardSoccer";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import About from "./pages/About";
+import Homepage from "./pages/Homepage";
 
 function App() {
   return (
-    <div>
-      <h1 className="text-center">Soccer</h1>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <CardSoccer />
-      </div>
-      <h1 className="text-center">Basketball</h1>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <CardSoccer />
-      </div>
-      <h1 className="text-center">NHL</h1>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <CardSoccer />
-      </div>
-      <h1 className="text-center">NFL</h1>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <CardSoccer />
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<Homepage />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/User");
+const Card = require("../models/Card");
 const UserCollection = require("../models/UserCollection");
 
 // get user information
@@ -24,7 +25,7 @@ router.post("/profile/:userId", async (req, res) => {
 
 // view users collection
 // first get all the cards then check if user's id is matching with owner's id
-router.get("/collection", async (req, res) => {
+router.get("/collection/:userId", async (req, res) => {
   try {
     const cards = await Card.find({ owner: { $eq: req.params.userId } });
     // const collection = Collection.find({ owner: { $eq: req.params.userId } });
