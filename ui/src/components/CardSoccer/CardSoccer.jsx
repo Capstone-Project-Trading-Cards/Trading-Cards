@@ -1,7 +1,7 @@
 import React from "react";
 import "./CardSoccer.css";
 
-export default function CardSoccer() {
+export default function CardSoccer({ data }) {
   return (
     <div>
       <div className="fut-player-card">
@@ -14,16 +14,12 @@ export default function CardSoccer() {
               <span>RW</span>
             </div>
             <div className="player-nation">
-              <img
-                src="https://selimdoyranli.com/cdn/fut-player-card/img/argentina.svg"
-                alt="Argentina"
-                draggable="false"
-              />
+              <img src="" alt="Argentina" draggable="false" />
             </div>
             <div className="player-club">
               <img
-                src="https://selimdoyranli.com/cdn/fut-player-card/img/barcelona.svg"
-                alt="Barcelona"
+                src={require(`../../images/teams/${data.team}.png`)}
+                alt={data.team}
                 draggable="false"
               />
             </div>
