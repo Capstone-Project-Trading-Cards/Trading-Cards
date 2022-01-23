@@ -1,6 +1,32 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+
 
 export default function Navbar() {
+
+  const [user, setUser] = useState()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+
+  useEffect(() => {
+    console.log(localStorage.getItem("token"))
+    axios.get("/api/getUsername", {
+        headers: {
+            "x-access-token": localStorage.getItem("token")
+        }
+    })
+    .then((res) => res.data)
+    .then(data => {
+      console.log(data)
+      console.log(data.isLoggedIn)
+      if(data.isLoggedIn) {
+        setUser(data.username)
+        setIsLoggedIn(true)
+      }
+    })
+    .catch((err) => console.log(err));
+  }, [])
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
       <div className="container">
@@ -83,9 +109,17 @@ export default function Navbar() {
           </div>
         </div>
         <div>
-          <a className="btn" href="#">
-            Login
-          </a>
+          {isLoggedIn ? (
+            <div>
+              <button>Logout</button>
+              {user}
+            </div>
+            ): (
+              <div>
+                <button>Login</button>
+              </div>
+            )
+          }
         </div>
       </div>
     </nav>
