@@ -1,0 +1,28 @@
+.parent {
+  display: grid;
+  grid-template-rows: 10em 40em 40em 10em;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    "navBar navBar navBar navBar"
+    ". carouSel carouSel ."
+    ". carouSel carouSel ."
+    "Footer Footer Footer Footer";
+  width: "100vw";
+  height: "100vh";
+  background-color: green;
+}
+
+.navbar {
+  grid-area: "navBar";
+  background-color: yellow;
+}
+
+.carousel {
+  grid-area: "carouSel";
+  background-color: black;
+}
+
+.footer {
+  grid-area: "Footer";
+  background-color: blue;
+}
