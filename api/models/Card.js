@@ -10,7 +10,7 @@ const CardSchema = mongoose.Schema(
     // rarity
     tier: { type: String, required: true },
     price: { type: Number, required: true },
-    image: { type: String, default: "no-pic" },
+    image: { data: Buffer, type: String, default: "no-pic" },
     // owner of the card it is connected to our User model
     owner: {
       type: mongoose.Schema.Types.ObjectId,

@@ -1,6 +1,17 @@
 const router = require("express").Router();
+const multer = require("multer");
+const fs = require("fs");
 const Card = require("../models/Card");
 const UserCollection = require("../models/UserCollection");
+
+// Sets up where to store POST images
+const storage = multer.diskStorage({
+  destination: function (req, res, cb) {
+    cb(null, "uploads/");
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // get all the cards on the homepage
 router.get("/", async (req, res) => {
@@ -14,7 +25,10 @@ router.get("/", async (req, res) => {
 
 // add new card
 router.post("/add", async (req, res) => {
+  upload.single("file");
   const newCard = new Card(req.body);
+  newCard.image.data = fs.readFileSync(req.body.image);
+  newCard.image.type = "image/jpeg";
   try {
     const savedCard = await newCard.save();
     res.status(200).send(savedCard);
