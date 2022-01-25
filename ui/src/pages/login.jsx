@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router'
 import React, { useEffect } from 'react'
 import axios from 'axios';
+import Navbar from '../components/Navbar';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
     const navigate = useNavigate()
@@ -9,14 +11,6 @@ export default function Login() {
         e.preventDefault()
 
         const form = e.target;
-        /*const user = {
-            username: form[0].value,
-            password: form[1].value
-        }
-        console.log(user)
-        */
-
-        
 
         axios.post('/api/login', {
             headers: {
@@ -29,18 +23,22 @@ export default function Login() {
         })
         .then((res) => res.data)
         .then(data => {
-            console.log(data)
-            //localStorage.clearItem("token")
+            console.log(`data from api login ${data}`)
             localStorage.setItem("token", data.token)
         })
         .then(res => navigate('/'))
     }
 
     return(
-        <form onSubmit={event => handleLogin(event)}>
-            <input required type="text"/>
-            <input required type="password"/>
-            <input type="submit" value="Submit"/>
-        </form>
+        <div>
+            <Navbar/>
+            <form onSubmit={event => handleLogin(event)}>
+                <input required type="text"/>
+                <input required type="password"/>
+                <input type="submit" value="Submit"/>
+            </form>
+            <small class="text-muted">Don't have an account? <Link to="/register">Register</Link></small>
+        </div>
+
     )
 }

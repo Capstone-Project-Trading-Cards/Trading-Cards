@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router'
 import React, { useEffect } from 'react'
 import axios from 'axios'
+import Navbar from '../components/Navbar'
+import { Link } from 'react-router-dom'
 
 export default function Register() {
     const navigate = useNavigate()
@@ -34,12 +36,17 @@ export default function Register() {
     }, [])
 
     return(
-        <form onSubmit={event => handleRegister(event)}>
-            <input required type='text'/>
-            <input required type='email'/>
-            <input required type='password'/>
-            <input type='submit' value='Register'/>
-        </form>
+        <div>
+            <Navbar/>
+            <form onSubmit={event => handleRegister(event)}>
+                <input required type='text'/>
+                <input required type='email'/>
+                <input required type='password'/>
+                <input type='submit' value='Register'/>
+            </form>
+            <small class="text-muted">Already have an account? <Link to="/login">Login</Link></small>
+        </div>
+
     )
 
 }

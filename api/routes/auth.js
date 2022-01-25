@@ -32,7 +32,6 @@ router.post("/api/register", async (req, res) => {
 router.post("/api/login", (req, res) => {
 
     const userLoggingIn = req.body.body
-    console.log('--- user logging')
     console.log(userLoggingIn.username)
     
     User.findOne({username: userLoggingIn.username})
@@ -85,8 +84,6 @@ router.get('/api/getUsername', verifyJWT, (req, res) => {
 function verifyJWT(req, res, next) {
     const token =
     req.body.token || req.query.token || req.headers["x-access-token"];
-    console.log(token)
-
     if(token) {
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if(err) return res.json({

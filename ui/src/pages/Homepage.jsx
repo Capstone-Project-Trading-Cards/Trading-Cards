@@ -6,8 +6,11 @@ import Carousel from "../components/carousel/Carousel";
 
 export default function Homepage() {
   const [cardData, setCardData] = useState([{}]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [username, setUsername] = useState('')
 
   useEffect(() => {
+    // get cards
     axios
       .get("http://localhost:5000/api/cards/")
       .then((res) => res.data)
@@ -16,6 +19,23 @@ export default function Homepage() {
         console.log(cardData);
       })
       .catch((err) => console.log(err));
+    
+    // get user
+    axios.get("/api/getUsername", {
+      headers: {
+          "x-access-token": localStorage.getItem("token")
+      }
+    })
+    .then((res) => res.data)
+    .then(data => {
+      console.log(data)
+      console.log(data.isLoggedIn)
+      if(data.isLoggedIn) {
+        setUsername(data.username)
+        setIsLoggedIn(true)
+      }
+    })
+    .catch((err) => console.log(err));
   }, []);
   return (
     <div
@@ -24,7 +44,7 @@ export default function Homepage() {
         height: "100%",
       }}
     >
-      <Navbar />
+      <Navbar username={username} isLoggedIn={isLoggedIn}/>
       <div
         className="container"
         style={{

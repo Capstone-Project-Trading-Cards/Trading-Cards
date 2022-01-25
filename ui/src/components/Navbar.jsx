@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
+export default function Navbar(props) {
+  // props contains boolean is user loggedIn, and username
+  const navigate = useNavigate()
 
-export default function Navbar() {
-
-  const [user, setUser] = useState()
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-
+  /*
   useEffect(() => {
     console.log(localStorage.getItem("token"))
     axios.get("/api/getUsername", {
@@ -26,6 +25,13 @@ export default function Navbar() {
     })
     .catch((err) => console.log(err));
   }, [])
+  */
+
+  function handleLogout() {
+    console.log('logout clicked')
+    localStorage.removeItem("token")
+    navigate('/')
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -48,9 +54,9 @@ export default function Navbar() {
           <div>
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
@@ -109,14 +115,14 @@ export default function Navbar() {
           </div>
         </div>
         <div>
-          {isLoggedIn ? (
+          {props.isLoggedIn ? (
             <div>
-              <button>Logout</button>
-              {user}
+              <button onClick={handleLogout}>Logout</button>
+              {props.username}
             </div>
             ): (
               <div>
-                <button>Login</button>
+                <Link className="btn btn-outline-success" to='/login'>Login</Link>
               </div>
             )
           }
