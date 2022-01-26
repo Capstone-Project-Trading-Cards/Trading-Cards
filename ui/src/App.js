@@ -13,6 +13,8 @@ function App() {
         <Route exact path="/" element={<Homepage />} />
         <Route path="/about" element={<About />} />
         <Route path="/addCard" element={<AddCardForm />} />
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
       </Routes>
     </BrowserRouter>
   );
