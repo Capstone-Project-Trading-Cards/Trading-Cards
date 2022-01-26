@@ -16,11 +16,15 @@ router.post("/api/register", async (req, res) => {
         res.json({message: 'Username or email has already been taken'})
     } else {
         user.password = await bcrypt.hash(req.body.password, 10)
-
+        let isAdmin = false
+        if(user.isAdmin != null) {
+            isAdmin = user.isAdmin
+        }
         const dbUser = new User({
             username: user.username.toLowerCase(),
             email: user.email.toLowerCase(),
-            password: user.password
+            password: user.password,
+            isAdmin: isAdmin
         })
 
         dbUser.save()
@@ -75,9 +79,10 @@ router.post("/api/login", (req, res) => {
     })
 })
 
+
 // get current uer
 router.get('/api/getUsername', verifyJWT, (req, res) => {
-    res.json({isLoggedIn: true, username: req.user.username})
+    res.json({user: req.user, isLoggedIn: true})
 })
 
 // verify user, check if logged in
@@ -85,12 +90,14 @@ function verifyJWT(req, res, next) {
     const token =
     req.body.token || req.query.token || req.headers["x-access-token"];
     if(token) {
-        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
             if(err) return res.json({
                 isLoggedIn: false,
                 message: 'failed to authenticate'
             })
-            req.user = decoded
+            let dbUser = await User.findById(decoded.id)
+            dbUser.isLoggedIn = true
+            req.user = dbUser
             return next()
         })
     } else {

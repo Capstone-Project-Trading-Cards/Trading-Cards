@@ -1,4 +1,7 @@
 import React from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { Navigate, useNavigate } from "react-router";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import {
   Box,
@@ -25,6 +28,31 @@ export default function AddCardForm() {
   const [chooseCategory, setChooseCategory] = useState([]);
   const [chooseTier, setChooseTier] = useState(null);
   const [choosePack, setChoosePack] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [user, setUser] = useState()
+
+  const navigate = useNavigate()
+
+  useEffect(() => {    
+    // get user
+    axios.get("/api/getUsername", {
+      headers: {
+          "x-access-token": localStorage.getItem("token")
+      }
+    })
+    .then((res) => res.data)
+    .then(data => {
+      console.log(data)
+      console.log(data.isLoggedIn)
+      if(data.isLoggedIn) {
+        setUser(data.user)
+        setIsLoggedIn(true)
+      } else {
+        navigate('/')
+      }
+    })
+    .catch((err) => console.log(err));
+  }, []);
 
   const categories = [
     "Fifa",
@@ -46,7 +74,7 @@ export default function AddCardForm() {
 
   return (
     <Box sx={{ width: "100vw", height: "100vh", overflowX: "hidden" }}>
-      <Navbar />
+      <Navbar user={user} isLoggedIn={isLoggedIn}/>
       <Typography mt={4} variant="h4" align="center">
         Add Card
       </Typography>

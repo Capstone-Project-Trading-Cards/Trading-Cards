@@ -6,31 +6,10 @@ export default function Navbar(props) {
   // props contains boolean is user loggedIn, and username
   const navigate = useNavigate()
 
-  /*
-  useEffect(() => {
-    console.log(localStorage.getItem("token"))
-    axios.get("/api/getUsername", {
-        headers: {
-            "x-access-token": localStorage.getItem("token")
-        }
-    })
-    .then((res) => res.data)
-    .then(data => {
-      console.log(data)
-      console.log(data.isLoggedIn)
-      if(data.isLoggedIn) {
-        setUser(data.username)
-        setIsLoggedIn(true)
-      }
-    })
-    .catch((err) => console.log(err));
-  }, [])
-  */
-
   function handleLogout() {
     console.log('logout clicked')
     localStorage.removeItem("token")
-    navigate('/')
+    navigate('/login')
   }
 
   return (
@@ -117,8 +96,16 @@ export default function Navbar(props) {
         <div>
           {props.isLoggedIn ? (
             <div>
+                {
+                  props.user.isAdmin ? 
+                    <div>
+                      <Link className="btn btn-outline-success" to="/addCard">Add Card</Link>
+                    </div>
+                    : ''
+                } 
+        
               <button onClick={handleLogout}>Logout</button>
-              {props.username}
+              {props.user.username}
             </div>
             ): (
               <div>

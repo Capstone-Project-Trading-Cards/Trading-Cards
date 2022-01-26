@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { CardTemplate } from "../components/CardTemplate";
+import Navbar from "../components/Navbar";
+import Carousel from "../components/carousel/Carousel";
 
 export default function Homepage() {
   const [cardData, setCardData] = useState([{}]);
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [username, setUsername] = useState('')
+  const [user, setUser] = useState()
 
   useEffect(() => {
     // get cards
@@ -29,7 +31,7 @@ export default function Homepage() {
       console.log(data)
       console.log(data.isLoggedIn)
       if(data.isLoggedIn) {
-        setUsername(data.username)
+        setUser(data.user)
         setIsLoggedIn(true)
       }
     })
@@ -42,7 +44,7 @@ export default function Homepage() {
         height: "100%",
       }}
     >
-      <Navbar username={username} isLoggedIn={isLoggedIn}/>
+      <Navbar user={user} isLoggedIn={isLoggedIn}/>
       <div
         className="container"
         style={{
