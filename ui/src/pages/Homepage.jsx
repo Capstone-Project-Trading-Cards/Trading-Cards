@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import CardSoccer from "../components/CardSoccer/CardSoccer";
-import Navbar from "../components/Navbar";
-import Carousel from "../components/carousel/Carousel";
+import { CardTemplate } from "../components/CardTemplate";
 
 export default function Homepage() {
   const [cardData, setCardData] = useState([{}]);
@@ -16,7 +14,7 @@ export default function Homepage() {
       .then((res) => res.data)
       .then((res) => {
         setCardData(res);
-        console.log(cardData);
+        console.log(res);
       })
       .catch((err) => console.log(err));
     
@@ -82,6 +80,7 @@ export default function Homepage() {
           </div>
         </div>
       </div>
+
     </div>
   );
 }
