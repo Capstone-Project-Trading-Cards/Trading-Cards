@@ -1,6 +1,38 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar(props) {
+  // props contains boolean is user loggedIn, and username
+  const navigate = useNavigate()
+
+  /*
+  useEffect(() => {
+    console.log(localStorage.getItem("token"))
+    axios.get("/api/getUsername", {
+        headers: {
+            "x-access-token": localStorage.getItem("token")
+        }
+    })
+    .then((res) => res.data)
+    .then(data => {
+      console.log(data)
+      console.log(data.isLoggedIn)
+      if(data.isLoggedIn) {
+        setUser(data.username)
+        setIsLoggedIn(true)
+      }
+    })
+    .catch((err) => console.log(err));
+  }, [])
+  */
+
+  function handleLogout() {
+    console.log('logout clicked')
+    localStorage.removeItem("token")
+    navigate('/')
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
       <div className="container">
@@ -22,9 +54,9 @@ export default function Navbar() {
           <div>
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
@@ -83,9 +115,17 @@ export default function Navbar() {
           </div>
         </div>
         <div>
-          <a className="btn" href="#">
-            Login
-          </a>
+          {props.isLoggedIn ? (
+            <div>
+              <button onClick={handleLogout}>Logout</button>
+              {props.username}
+            </div>
+            ): (
+              <div>
+                <Link className="btn btn-outline-success" to='/login'>Login</Link>
+              </div>
+            )
+          }
         </div>
       </div>
     </nav>
