@@ -58,22 +58,90 @@ export default function Navbar(props) {
                   <a className="dropdown-item" href="#">
                     Action
                   </a>
-                  <a className="dropdown-item" href="#">
-                    Another action
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    Link
                   </a>
-                  <div className="dropdown-divider"></div>
-                  <a className="dropdown-item" href="#">
-                    Something else here
+                </li>
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Dropdown
                   </a>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <a className="dropdown-item" href="#">
+                      Action
+                    </a>
+                    <a className="dropdown-item" href="#">
+                      Another action
+                    </a>
+                    <div className="dropdown-divider"></div>
+                    <a className="dropdown-item" href="#">
+                      Something else here
+                    </a>
+                  </div>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link disabled" href="#">
+                    Disabled
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="ml-auto">
+              <form className="form-inline my-2 my-lg-0">
+                <div className="d-flex">
+                  <input
+                    className="form-control mr-sm-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <button
+                    className="btn btn-outline-success my-2 my-sm-0"
+                    type="submit"
+                  >
+                    Search
+                  </button>
                 </div>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link disabled" href="#">
-                  Disabled
-                </a>
-              </li>
-            </ul>
+              </form>
+            </div>
           </div>
+          <div>
+            <a className="btn" href="#">
+              Login
+            </a>
+            {props.isLoggedIn ? (
+              <div>
+                {props.user.isAdmin ? (
+                  <div>
+                    <Link className="btn btn-outline-success" to="/addCard">
+                      Add Card
+                    </Link>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                <button onClick={handleLogout}>Logout</button>
+                {props.user.username}
+              </div>
+            ) : (
+              <div>
+                <Link className="btn btn-outline-success" to="/login">
+                  Login
+                </Link>
           <div className="ml-auto">
             <form className="form-inline my-2 my-lg-0">
               <div className="d-flex">
@@ -90,9 +158,12 @@ export default function Navbar(props) {
                   Search
                 </button>
               </div>
-            </form>
+            )}
           </div>
         </div>
+      </nav>
+    );
+  }
         <div>
           {props.isLoggedIn ? (
             <div>

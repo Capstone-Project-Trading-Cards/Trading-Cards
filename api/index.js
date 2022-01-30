@@ -6,11 +6,11 @@ const mongoose = require("mongoose");
 
 const dbURI = "mongodb+srv://jack:txFTSmfRQMBx3aHl@comp3123.eyf58.mongodb.net/capstone-trading-card?retryWrites=true&w=majority"
 
-
 // import routes
 const cardsRoute = require("./routes/cards");
 const userRoute = require("./routes/user");
-const auth = require('./routes/auth')
+const auth = require("./routes/auth");
+
 
 // server setup
 const app = express();
@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
+const dbURI = process.env.MONGO_DB;
 
 // connect to database
 mongoose
@@ -31,6 +32,7 @@ app.use("/api/cards", cardsRoute);
 app.use("/api/user", userRoute);
 app.use("/", auth)
 
+app.use("/", auth);
 // creating server
 app.listen(process.env.PORT || 5000, () =>
   console.log("Server is running on Port 5000")
