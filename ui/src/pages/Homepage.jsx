@@ -1,21 +1,41 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import CardSoccer from "../components/CardSoccer/CardSoccer";
+import { CardTemplate } from "../components/CardTemplate";
 import Navbar from "../components/Navbar";
 import Carousel from "../components/carousel/Carousel";
 
 export default function Homepage() {
   const [cardData, setCardData] = useState([{}]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [user, setUser] = useState()
 
   useEffect(() => {
+    // get cards
     axios
       .get("http://localhost:5000/api/cards/")
       .then((res) => res.data)
       .then((res) => {
         setCardData(res);
-        console.log(cardData);
+        console.log(res);
       })
       .catch((err) => console.log(err));
+    
+    // get user
+    axios.get("/api/getUsername", {
+      headers: {
+          "x-access-token": localStorage.getItem("token")
+      }
+    })
+    .then((res) => res.data)
+    .then(data => {
+      console.log(data)
+      console.log(data.isLoggedIn)
+      if(data.isLoggedIn) {
+        setUser(data.user)
+        setIsLoggedIn(true)
+      }
+    })
+    .catch((err) => console.log(err));
   }, []);
   return (
     <div
@@ -24,7 +44,7 @@ export default function Homepage() {
         height: "100%",
       }}
     >
-      <Navbar />
+      <Navbar user={user} isLoggedIn={isLoggedIn}/>
       <div
         className="container"
         style={{
@@ -62,6 +82,7 @@ export default function Homepage() {
           </div>
         </div>
       </div>
+
     </div>
   );
 }

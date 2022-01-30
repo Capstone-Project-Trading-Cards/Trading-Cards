@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const multer = require("multer");
+const fs = require("fs");
 const Card = require("../models/Card");
 const UserCollection = require("../models/UserCollection");
 
@@ -19,6 +21,13 @@ const upload = multer({
   storage: storage,
 });
 
+  destination: function (req, res, cb) {
+    cb(null, "uploads/");
+  },
+});
+
+const upload = multer({ storage: storage });
+
 // get all the cards on the homepage
 router.get("/", async (req, res) => {
   try {
@@ -28,6 +37,7 @@ router.get("/", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
 
 // name image matches with the input name image
 router.post("/add", upload.single("image"), async (req, res) => {
@@ -51,6 +61,7 @@ router.post("/add", upload.single("image"), async (req, res) => {
     // when user puts the cards up for trade switch to true, it is false as default
     package: req.body.package,
   });
+  
   newCard.image.data = fs.readFileSync(req.body.image);
   newCard.image.type = "image/jpeg";
   try {

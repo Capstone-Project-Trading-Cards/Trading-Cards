@@ -4,10 +4,13 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
+const dbURI = "mongodb+srv://jack:txFTSmfRQMBx3aHl@comp3123.eyf58.mongodb.net/capstone-trading-card?retryWrites=true&w=majority"
+
 // import routes
 const cardsRoute = require("./routes/cards");
 const userRoute = require("./routes/user");
 const auth = require("./routes/auth");
+
 
 // server setup
 const app = express();
@@ -20,13 +23,14 @@ const dbURI = process.env.MONGO_DB;
 
 // connect to database
 mongoose
-  .connect(process.env.MONGO_DB)
+  .connect(dbURI)
   .then(() => console.log(`Database connection successful`))
   .catch((err) => console.log(`Database connection error ${err}`));
 
 // routes
 app.use("/api/cards", cardsRoute);
 app.use("/api/user", userRoute);
+app.use("/", auth)
 
 app.use("/", auth);
 // creating server

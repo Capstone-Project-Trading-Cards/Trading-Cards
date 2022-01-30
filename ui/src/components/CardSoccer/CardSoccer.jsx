@@ -18,7 +18,7 @@ export default function CardSoccer({ data }) {
             </div>
             <div className="player-club">
               <img
-                src={require(`../../images/teams/${data.team}.png`)}
+                src={require(`../`)}
                 alt={data.team}
                 draggable="false"
               />
