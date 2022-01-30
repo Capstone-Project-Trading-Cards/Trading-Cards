@@ -28,6 +28,7 @@ const CardSchema = mongoose.Schema(
     team: { type: String, required: true },
     // when user puts the cards up for trade switch to true, it is false as default
     availableToTrade: { type: Boolean, default: false },
+    package: { type: String, required: true },
   },
   {
     // add the time when it is created

@@ -2,6 +2,23 @@ const router = require("express").Router();
 const Card = require("../models/Card");
 const UserCollection = require("../models/UserCollection");
 
+// Sets up where to store POST images
+const storage = multer.diskStorage({
+  destination: (request, file, callback) => {
+    callback(null, "../public/uploads/images");
+  },
+  // add back the extension that multer removed
+  filename: (request, file, callback) => {
+    callback(null, Date.now() + file.originalname);
+  },
+});
+
+// upload parameter for multer
+// defining the storage and the upload limit
+const upload = multer({
+  storage: storage,
+});
+
 // get all the cards on the homepage
 router.get("/", async (req, res) => {
   try {
@@ -12,9 +29,30 @@ router.get("/", async (req, res) => {
   }
 });
 
-// add new card
-router.post("/add", async (req, res) => {
-  const newCard = new Card(req.body);
+// name image matches with the input name image
+router.post("/add", upload.single("image"), async (req, res) => {
+  const newCard = new Card({
+    name: req.body.name,
+    rating: req.body.rating,
+    // category that it belongs to could be more than one
+    category: req.body.category,
+    // rarity
+    tier: req.body.tier,
+    price: req.body.price,
+    speed: req.body.speed,
+    power: req.body.power,
+    vision: req.body.vision,
+    passing: req.body.passing,
+    defending: req.body.defending,
+    stamina: req.body.stamina,
+
+    nationality: req.body.nationality,
+    team: req.body.team,
+    // when user puts the cards up for trade switch to true, it is false as default
+    package: req.body.package,
+  });
+  newCard.image.data = fs.readFileSync(req.body.image);
+  newCard.image.type = "image/jpeg";
   try {
     const savedCard = await newCard.save();
     res.status(200).send(savedCard);
