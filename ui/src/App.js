@@ -5,6 +5,7 @@ import AddCardForm from "./pages/AddCardForm";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login"
 import Register from "./pages/Register"
+import Packs from './pages/Packs'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/addCard" element={<AddCardForm />} />
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
+        <Route path='/packs' element={<Packs/>}/>
       </Routes>
     </BrowserRouter>
   );

@@ -38,6 +38,8 @@ export default function Login() {
         localStorage.setItem("token", data.token);
         navigate("/");
       })
+
+    //axios.post("/api/packs")
   }
 
   return (
