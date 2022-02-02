@@ -41,7 +41,7 @@ router.post("/api/login", (req, res) => {
     .then(dbUser => {
         if(!dbUser) {
             console.log('user not found...')
-            return res.json({messgae: 'invalid username or password, not found'})
+            return res.json({message: 'invalid username or password, not found', status:500})
         }
         bcrypt.compare(userLoggingIn.password, dbUser.password)
         .then(isCorrect => {
@@ -71,7 +71,8 @@ router.post("/api/login", (req, res) => {
             } else {
                 console.log('password incorrect...')
                 return res.json({
-                    message: 'invalid username or password 2'
+                    message: 'invalid username or password 2',
+                    status:500
                 })
             }
         })
