@@ -23,13 +23,8 @@ export default function Login() {
 
     axios
       .post("/api/login", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: {
           username: username,
           password: password,
-        },
       })
       .then((res) => res.data)
       .then((data) => {

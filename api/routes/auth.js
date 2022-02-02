@@ -7,6 +7,7 @@ const router = require("express").Router()
 // register user
 router.post("/api/register", async (req, res) => {
     const user = req.body
+    console.log(user)
 
     // check if username or email has already been taken
     const takenUsername = await User.findOne({username: user.username})
@@ -34,9 +35,7 @@ router.post("/api/register", async (req, res) => {
 
 // login user
 router.post("/api/login", (req, res) => {
-
-    const userLoggingIn = req.body.body
-    console.log(userLoggingIn.username)
+    const userLoggingIn = req.body
     
     User.findOne({username: userLoggingIn.username})
     .then(dbUser => {
