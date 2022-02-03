@@ -3,8 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import About from "./pages/About";
 import AddCardForm from "./pages/AddCardForm";
 import Homepage from "./pages/Homepage";
-import Login from "./pages/Login"
-import Register from "./pages/Register"
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Packs from "./pages/Packs";
+import BuyCoins from "./pages/BuyCoins";
 
 function App() {
   return (
@@ -13,8 +15,10 @@ function App() {
         <Route exact path="/" element={<Homepage />} />
         <Route path="/about" element={<About />} />
         <Route path="/addCard" element={<AddCardForm />} />
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/register" element={<Register/>}/>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/packs" element={<Packs />} />
+        <Route path="/buyCoins" element={<BuyCoins />} />
       </Routes>
     </BrowserRouter>
   );

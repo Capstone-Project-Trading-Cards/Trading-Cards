@@ -8,6 +8,8 @@ const UserSchema = mongoose.Schema(
     // we can assign admin roles using this
     isAdmin: { type: Boolean, required: true, default: false },
     img: { type: String },
+    coinBalance: { type: Number, default: 0 },
+    moneyBalance: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

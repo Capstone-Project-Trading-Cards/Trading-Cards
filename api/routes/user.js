@@ -3,6 +3,22 @@ const User = require("../models/User");
 const Card = require("../models/Card");
 const UserCollection = require("../models/UserCollection");
 
+// schema test
+User.schema.static.adjustUserBalance = function (
+  userId,
+  coinAmount,
+  moneyAmount
+) {
+  User.findByIdAndUpdate(userId, {
+    $set: {
+      coinBalance: coinBalance + coinAmount,
+      moneyBalance: moneyBalance + moneyAmount,
+    },
+  });
+  User.save();
+  return "User balance is updated";
+};
+
 // get user information
 router.get("/profile/:userId", async (req, res) => {
   try {
@@ -40,6 +56,25 @@ router.post("/new", async (req, res) => {
   try {
     const savedUser = await newUser.save();
     res.status(200).send(savedUser.username);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+router.post("/buyCoins", async (req, res) => {
+  const coinAmount = req.body.coinAmount;
+  const coinCost = req.body.coinCost;
+  const user = req.body.username;
+  try {
+    const updateUser = await User.findByIdAndUpdate(user, {
+      $set: {
+        coinBalance: cointBalance + coinAmount,
+        moneyBalance: moneyBalance - coinCost,
+      },
+      new: true,
+    });
+    // updatedUser.coinBalance - updatedUser.moneyBalance
+    res.status(200).send(updateUser);
   } catch (err) {
     res.status(500).send(err);
   }
