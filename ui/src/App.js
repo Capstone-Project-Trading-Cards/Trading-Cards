@@ -19,7 +19,6 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/packs" element={<Packs />} />
         <Route path="/buyCoins" element={<BuyCoins />} />
-        <Route path="/packs" element={<Packs />} />
       </Routes>
     </BrowserRouter>
   );
