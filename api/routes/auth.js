@@ -7,6 +7,7 @@ const router = require("express").Router()
 // register user
 router.post("/api/register", async (req, res) => {
     const user = req.body
+    console.log(user)
 
     // check if username or email has already been taken
     const takenUsername = await User.findOne({username: user.username})
@@ -34,15 +35,13 @@ router.post("/api/register", async (req, res) => {
 
 // login user
 router.post("/api/login", (req, res) => {
-
-    const userLoggingIn = req.body.body
-    console.log(userLoggingIn.username)
+    const userLoggingIn = req.body
     
     User.findOne({username: userLoggingIn.username})
     .then(dbUser => {
         if(!dbUser) {
             console.log('user not found...')
-            return res.json({messgae: 'invalid username or password, not found'})
+            return res.json({message: 'invalid username or password, not found', status:500})
         }
         bcrypt.compare(userLoggingIn.password, dbUser.password)
         .then(isCorrect => {
@@ -72,7 +71,8 @@ router.post("/api/login", (req, res) => {
             } else {
                 console.log('password incorrect...')
                 return res.json({
-                    message: 'invalid username or password 2'
+                    message: 'invalid username or password 2',
+                    status:500
                 })
             }
         })

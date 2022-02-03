@@ -16,6 +16,7 @@ import {
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
   function handleLogin(e) {
@@ -23,20 +24,22 @@ export default function Login() {
 
     axios
       .post("/api/login", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: {
           username: username,
           password: password,
-        },
       })
       .then((res) => res.data)
       .then((data) => {
-        console.log(`data from api login ${data}`);
+        if(data.status == 500) {
+          setIsError(true)
+          console.log('500')
+          return
+        }
+        console.log(`data from api login ${data.status}`);
         localStorage.setItem("token", data.token);
+        navigate("/");
       })
-      .then(() => navigate("/"));
+
+    //axios.post("/api/packs")
   }
 
   return (
@@ -53,6 +56,15 @@ export default function Login() {
             component="form"
             onSubmit={handleLogin}
           >
+            {
+              isError ? 
+              <Box>
+                <Typography variant="h6">
+                  Username or password incorrect
+                </Typography>
+              </Box> :
+              ''
+            } 
             <FormControl>
               <TextField
                 type="text"

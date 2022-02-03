@@ -27,17 +27,11 @@ export default function Register() {
     e.preventDefault();
 
     if (password === confirmPassword) {
-      const user = {
+
+      axios.post("/api/register", {
         username: username,
         email: email,
         password: password,
-      };
-
-      axios.post("/api/register", {
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(user),
       });
       navigate("/login");
     }

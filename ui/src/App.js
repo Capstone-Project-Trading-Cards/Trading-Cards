@@ -5,8 +5,8 @@ import AddCardForm from "./pages/AddCardForm";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Packs from "./pages/Packs";
 import BuyCoins from "./pages/BuyCoins";
+import Packs from "./pages/Packs";
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/packs" element={<Packs />} />
         <Route path="/buyCoins" element={<BuyCoins />} />
+        <Route path="/packs" element={<Packs />} />
       </Routes>
     </BrowserRouter>
   );

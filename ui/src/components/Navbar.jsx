@@ -38,9 +38,9 @@ export default function Navbar(props) {
                 </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
+                <Link className="nav-link" to='/packs'>
+                  Packs
+                </Link>
               </li>
               <li className="nav-item dropdown">
                 <a
