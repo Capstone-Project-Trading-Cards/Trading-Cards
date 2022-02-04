@@ -96,7 +96,7 @@ export default function BuyCoins() {
   }, []);
 
   return (
-    <Box sx={{ height: "100vh", width: "100vw", overflow: "hidden" }}>
+    <Box sx={{ height: "100vh", width: "100%" }}>
       <Navbar user={user} isLoggedIn={isLoggedIn} />
       <Box
         container
@@ -104,8 +104,8 @@ export default function BuyCoins() {
         sx={{
           height: "100%",
           width: "100%",
-          overflow: "hidden",
           position: "relative",
+          boxSizing: "border-box",
           margin: 0,
         }}
       >
@@ -175,7 +175,7 @@ export default function BuyCoins() {
                 }}
               >
                 <img
-                  width="120px"
+                  width="160px"
                   src={TCCLogo1}
                   sx={{ position: "relative" }}
                   alt="50.000 TCC"
@@ -190,7 +190,7 @@ export default function BuyCoins() {
                 </Button>
               </Box>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <img width="120px" src={TCCLogo2} alt="100.000 TCC" />
+                <img width="160px" src={TCCLogo2} alt="100.000 TCC" />
                 <Button
                   variant="contained"
                   value={buttonValue}
@@ -201,7 +201,7 @@ export default function BuyCoins() {
                 </Button>
               </Box>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <img width="120px" src={TCCLogo3} alt="200.000 TCC" />
+                <img width="160px" src={TCCLogo3} alt="200.000 TCC" />
                 <Button
                   variant="contained"
                   value={buttonValue}
@@ -212,7 +212,7 @@ export default function BuyCoins() {
                 </Button>
               </Box>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <img width="120px" src={TCCLogo4} alt="500.000 TCC" />
+                <img width="160px" src={TCCLogo4} alt="500.000 TCC" />
                 <Button
                   variant="contained"
                   value={buttonValue}
