@@ -13,13 +13,19 @@ export default function Footer() {
         flexDirection: "column",
       }}
     >
-      <Typography mb={2} mt={4} variant="body2">
+      <Typography sx={{ color: "white" }} mb={2} mt={4} variant="body2">
         Trading Cards Co. 2022
       </Typography>
       <ButtonGroup variant="text" aria-label="text button group">
-        <Button startIcon={<PrivacyTipIcon />}>Privacy</Button>
-        <Button startIcon={<GavelIcon />}>Terms</Button>
-        <Button startIcon={<SupportIcon />}>Support</Button>
+        <Button sx={{ color: "white" }} startIcon={<PrivacyTipIcon />}>
+          Privacy
+        </Button>
+        <Button sx={{ color: "white" }} startIcon={<GavelIcon />}>
+          Terms
+        </Button>
+        <Button sx={{ color: "white" }} startIcon={<SupportIcon />}>
+          Support
+        </Button>
       </ButtonGroup>
     </Box>
   );

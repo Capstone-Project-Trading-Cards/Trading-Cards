@@ -62,22 +62,26 @@ router.post("/new", async (req, res) => {
 });
 
 router.post("/buyCoins", async (req, res) => {
-  const coinAmount = req.body.coinAmount;
-  const coinCost = req.body.coinCost;
-  const user = req.body.username;
+  const coinBalance = req.body.coinBalance;
+  const moneyBalance = req.body.moneyBalance;
+  const userId = req.body.userId;
   try {
-    const updateUser = await User.findByIdAndUpdate(user, {
-      $set: {
-        coinBalance: cointBalance + coinAmount,
-        moneyBalance: moneyBalance - coinCost,
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $set: { coinBalance: coinBalance, moneyBalance: moneyBalance },
       },
-      new: true,
-    });
-    // updatedUser.coinBalance - updatedUser.moneyBalance
-    res.status(200).send(updateUser);
+      { new: true }
+    );
+    res.status(200).send(updatedUser);
   } catch (err) {
     res.status(500).send(err);
   }
+});
+
+router.get("/getUserBalance", async (req, res) => {
+  const user = await User.find(req.body.userId);
+  res.send(user.coinBalance);
 });
 
 module.exports = router;

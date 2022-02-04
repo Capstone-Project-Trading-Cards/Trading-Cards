@@ -3,12 +3,6 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Box, Button, Typography } from "@mui/material";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
-import TCCLogo1 from "../images/soccer-player-cards/Haaland.png";
-import TCCLogo2 from "../images/soccer-player-cards/Messi.png";
-import TCCLogo3 from "../images/soccer-player-cards/RONALDO.png";
-import TCCLogo4 from "../images/soccer-player-cards/Lewandowski.png";
-import TCCLogo5 from "../images/soccer-player-cards/Salah.png";
-
 import Footer from "../components/Footer";
 
 export default function Homepage() {
@@ -26,7 +20,6 @@ export default function Homepage() {
         console.log(res);
       })
       .catch((err) => console.log(err));
-
     // get user
     axios
       .get("/api/getUsername", {
@@ -71,35 +64,7 @@ export default function Homepage() {
           alt="background"
         />
         <Box sx={{ position: "relative" }} mb={2}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Box
-              mt={6}
-              sx={{ display: "flex", justifyContent: "space-around" }}
-            >
-              <img width="18%" src={TCCLogo1} />
-              <img width="18%" src={TCCLogo4} />
-              <img width="18%" src={TCCLogo2} />
-              <img width="18%" src={TCCLogo5} />
-              <img width="18%" src={TCCLogo3} />
-            </Box>
-            <Typography mt={2} variant="h2" color="white">
-              Trading Cards Co.
-            </Typography>
-            <Typography variant="body2" mt={2} color="white">
-              Buy, Collect, Trade Cards. Start Now!
-            </Typography>
-            <Box mt={2}>
-              <Button href="/buyCoins" variant="contained">
-                Buy Coins
-              </Button>
-            </Box>
-          </Box>
+          <Typography>Page Content Goes Here...</Typography>
         </Box>
         <Footer />
       </Box>

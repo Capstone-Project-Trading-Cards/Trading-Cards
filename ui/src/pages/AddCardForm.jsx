@@ -57,7 +57,7 @@ export default function AddCardForm() {
   useEffect(() => {
     console.log(formInformation);
     // get user
-    /*
+
     axios
       .get("/api/getUsername", {
         headers: {
@@ -76,7 +76,6 @@ export default function AddCardForm() {
         }
       })
       .catch((err) => console.log(err));
-      */
   }, []);
 
   const handleSubmit = (e) => {
