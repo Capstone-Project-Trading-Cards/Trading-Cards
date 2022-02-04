@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const CardSchema = mongoose.Schema(
   {
+    _id: { type: Number, default: 1 },
     // name of the card
     name: { type: String, required: true },
     rating: { type: Number, required: true },
@@ -36,4 +37,18 @@ const CardSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Card", CardSchema);
+const Card = mongoose.model("Card", CardSchema);
+
+// increment card id by 1 whenever there is a new card added to the database
+CardSchema.pre("save", function (next) {
+  if (this.isNew) {
+    Card.count().then((res) => {
+      this._id = res;
+      next();
+    });
+  } else {
+    next();
+  }
+});
+
+module.exports = Card;

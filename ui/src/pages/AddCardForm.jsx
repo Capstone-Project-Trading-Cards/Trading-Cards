@@ -22,7 +22,6 @@ import {
 import StorageIcon from "@mui/icons-material/Storage";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 export default function AddCardForm() {
   const [chooseCategory, setChooseCategory] = useState([]);
@@ -106,7 +105,14 @@ export default function AddCardForm() {
   ];
 
   return (
-    <Box sx={{ width: "100vw", height: "100vh", overflowX: "hidden" }}>
+    <Box
+      sx={{
+        width: "100vw",
+        height: "100vh",
+        overflowX: "hidden",
+        backgroundColor: "#FAFAFA",
+      }}
+    >
       <Navbar user={user} isLoggedIn={isLoggedIn} />
       <Typography mt={4} variant="h4" align="center">
         Add Card
@@ -439,8 +445,6 @@ export default function AddCardForm() {
           </Grid>
         </Grid>
       </Grid>
-      <br />
-      <Footer />
     </Box>
   );
 }

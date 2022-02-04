@@ -112,7 +112,7 @@ export default function Navbar(props) {
                 }}
               >
                 <Button size="small" variant="contained">
-                  Profile
+                  {props.user.username}
                 </Button>
                 <Button
                   variant="contained"

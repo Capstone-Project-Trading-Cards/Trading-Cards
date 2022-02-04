@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 });
 
 // name image matches with the input name image
-router.post("/add", upload.single("image"), async (req, res) => {
+router.post("/add", async (req, res) => {
   const newCard = new Card({
     name: req.body.name,
     rating: req.body.rating,
@@ -103,6 +103,7 @@ router.post("/:id", async (req, res) => {
   }
 });
 
+/*
 // add card to the collection
 // basically change the ownership of the card
 router.post("buy/:id", async (req, res) => {
@@ -116,5 +117,6 @@ router.post("buy/:id", async (req, res) => {
     res.status(500).send(err);
   }
 });
+*/
 
 module.exports = router;
