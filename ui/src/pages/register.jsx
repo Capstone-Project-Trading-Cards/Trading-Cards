@@ -27,7 +27,6 @@ export default function Register() {
     e.preventDefault();
 
     if (password === confirmPassword) {
-
       axios.post("/api/register", {
         username: username,
         email: email,

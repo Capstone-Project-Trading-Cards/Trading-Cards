@@ -1,3 +1,5 @@
+import { Button, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -13,7 +15,7 @@ export default function Navbar(props) {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div className="container">
         <a className="navbar-brand" href="#">
           Trading Cards Co.
@@ -38,9 +40,9 @@ export default function Navbar(props) {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to='/packs'>
-                  Packs
-                </Link>
+                <a className="nav-link" href="#">
+                  Link
+                </a>
               </li>
               <li className="nav-item dropdown">
                 <a
@@ -83,12 +85,9 @@ export default function Navbar(props) {
                   placeholder="Search"
                   aria-label="Search"
                 />
-                <button
-                  className="btn btn-outline-primary my-2 my-sm-0"
-                  type="submit"
-                >
+                <Button variant="contained" type="submit">
                   Search
-                </button>
+                </Button>
               </div>
             </form>
           </div>
@@ -105,16 +104,32 @@ export default function Navbar(props) {
               ) : (
                 ""
               )}
-
-              <button onClick={handleLogout}>Logout</button>
-              {props.user.username}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  width: "200px",
+                }}
+              >
+                <Button size="small" variant="contained">
+                  Profile
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </Box>
             </div>
           ) : (
-            <div>
-              <Link className="btn btn-outline-success" to="/login">
+            <Box>
+              <Button size="small" variant="contained" href="/login">
                 Login
-              </Link>
-            </div>
+              </Button>
+            </Box>
           )}
         </div>
       </div>

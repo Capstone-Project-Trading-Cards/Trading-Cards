@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const cardsRoute = require("./routes/cards");
 const userRoute = require("./routes/user");
 const auth = require("./routes/auth");
-const packRoute = require("./routes/pack")
+const packRoute = require("./routes/pack");
 
 // server setup
 const app = express();
@@ -29,7 +29,7 @@ mongoose
 app.use("/api/cards", cardsRoute);
 app.use("/api/user", userRoute);
 app.use("/", auth);
-app.use('/api/packs', packRoute)
+app.use("/api/packs", packRoute);
 
 app.use("/", auth);
 // creating server
