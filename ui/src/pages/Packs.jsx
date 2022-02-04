@@ -72,8 +72,8 @@ export default function Packs() {
         sx={{
           height: "100%",
           width: "100%",
-          position: "relative",
           margin: 0,
+          position: "relative",
         }}
       >
         <img
@@ -138,13 +138,13 @@ export default function Packs() {
                   display: "flex",
                   flexDirection: "column",
                   height: "100%",
+                  width: "18%",
                 }}
               >
                 <Typography variant="h6" color="white" textAlign="center">
                   50.000 TCC
                 </Typography>
                 <img
-                  width="160px"
                   src={PackLogo1}
                   sx={{ position: "relative" }}
                   alt="Forwards Pack"
@@ -159,11 +159,13 @@ export default function Packs() {
                 </Button>
               </Box>
 
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Box
+                sx={{ display: "flex", flexDirection: "column", width: "18%" }}
+              >
                 <Typography variant="h6" color="white" textAlign="center">
                   100.000 TCC
                 </Typography>
-                <img width="160px" src={PackLogo2} alt="Golds pack" />
+                <img src={PackLogo2} alt="Golds pack" />
                 <Button
                   variant="contained"
                   value={buttonValue}
@@ -173,11 +175,13 @@ export default function Packs() {
                   Golds Pack
                 </Button>
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Box
+                sx={{ display: "flex", flexDirection: "column", width: "18%" }}
+              >
                 <Typography variant="h6" color="white" textAlign="center">
                   250.000 TCC
                 </Typography>
-                <img width="160px" src={PackLogo3} alt="Diamonds Pack" />
+                <img src={PackLogo3} alt="Diamonds Pack" />
                 <Button
                   variant="contained"
                   value={buttonValue}
@@ -187,11 +191,13 @@ export default function Packs() {
                   Diamonds Pack
                 </Button>
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Box
+                sx={{ display: "flex", flexDirection: "column", width: "18%" }}
+              >
                 <Typography variant="h6" color="white" textAlign="center">
                   500.000 TCC
                 </Typography>
-                <img width="160px" src={PackLogo4} alt="Rare Cards" />
+                <img src={PackLogo4} alt="Rare Cards" />
                 <Button
                   variant="contained"
                   value={buttonValue}

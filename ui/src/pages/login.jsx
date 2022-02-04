@@ -24,20 +24,20 @@ export default function Login() {
 
     axios
       .post("/api/login", {
-          username: username,
-          password: password,
+        username: username,
+        password: password,
       })
       .then((res) => res.data)
       .then((data) => {
-        if(data.status == 500) {
-          setIsError(true)
-          console.log('500')
-          return
+        if (data.status == 500) {
+          setIsError(true);
+          console.log("500");
+          return;
         }
         console.log(`data from api login ${data.status}`);
         localStorage.setItem("token", data.token);
         navigate("/");
-      })
+      });
 
     //axios.post("/api/packs")
   }
@@ -45,6 +45,9 @@ export default function Login() {
   return (
     <div>
       <Navbar />
+      <Typography mt={6} variant="h4" textAlign="center">
+        Login To Your Account
+      </Typography>
       <Box
         mt={6}
         lg={12}
@@ -56,15 +59,15 @@ export default function Login() {
             component="form"
             onSubmit={handleLogin}
           >
-            {
-              isError ? 
+            {isError ? (
               <Box>
                 <Typography variant="h6">
                   Username or password incorrect
                 </Typography>
-              </Box> :
-              ''
-            } 
+              </Box>
+            ) : (
+              ""
+            )}
             <FormControl>
               <TextField
                 type="text"
@@ -72,6 +75,7 @@ export default function Login() {
                 onChange={(e) => setUsername(e.target.value)}
                 label="Username"
                 margin="normal"
+                sx={{ backgroundColor: "white" }}
               />
             </FormControl>
             <FormControl>
@@ -81,6 +85,7 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 label="Password"
                 margin="normal"
+                sx={{ backgroundColor: "white" }}
               />
             </FormControl>
             <Stack m={4}>
@@ -94,6 +99,9 @@ export default function Login() {
       <Box class="text-muted">
         <Typography textAlign="center">
           Don't have an account? <Link to="/register">Register</Link>
+        </Typography>
+        <Typography mt={6} textAlign="center">
+          Trading Cards Co. &copy;
         </Typography>
       </Box>
     </div>

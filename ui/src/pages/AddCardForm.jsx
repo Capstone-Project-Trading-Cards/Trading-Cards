@@ -141,6 +141,7 @@ export default function AddCardForm() {
                   }
                   label="First Name"
                   variant="outlined"
+                  sx={{ backgroundColor: "white" }}
                 />
               </FormControl>
               <FormControl
@@ -159,6 +160,7 @@ export default function AddCardForm() {
                   }
                   label="Last Name"
                   variant="outlined"
+                  sx={{ backgroundColor: "white" }}
                 />
               </FormControl>
               <FormControl sx={{ m: 1, width: "48%" }}>
@@ -172,6 +174,7 @@ export default function AddCardForm() {
                   }
                   label="Nationality"
                   variant="outlined"
+                  sx={{ backgroundColor: "white" }}
                 />
               </FormControl>
               <FormControl sx={{ m: 1, width: "48%" }}>
@@ -185,6 +188,7 @@ export default function AddCardForm() {
                   }
                   label="Team"
                   variant="outlined"
+                  sx={{ backgroundColor: "white" }}
                 />
               </FormControl>
               <InputLabel sx={{ m: 2 }}>
@@ -208,6 +212,7 @@ export default function AddCardForm() {
                       rating: e.target.value,
                     })
                   }
+                  sx={{ backgroundColor: "white" }}
                 />
               </FormControl>
               <FormControl sx={{ m: 1, width: "12%" }}>
@@ -228,6 +233,7 @@ export default function AddCardForm() {
                       speed: e.target.value,
                     })
                   }
+                  sx={{ backgroundColor: "white" }}
                 />
               </FormControl>
               <FormControl sx={{ m: 1, width: "12%" }}>
@@ -248,6 +254,7 @@ export default function AddCardForm() {
                       power: e.target.value,
                     })
                   }
+                  sx={{ backgroundColor: "white" }}
                 />
               </FormControl>
               <FormControl sx={{ m: 1, width: "12%" }}>
@@ -268,6 +275,7 @@ export default function AddCardForm() {
                       vision: e.target.value,
                     })
                   }
+                  sx={{ backgroundColor: "white" }}
                 />
               </FormControl>
               <FormControl sx={{ m: 1, width: "12%" }}>
@@ -279,6 +287,7 @@ export default function AddCardForm() {
                       min: 10,
                     },
                   }}
+                  sx={{ backgroundColor: "white" }}
                   label="passing"
                   variant="outlined"
                   value={formInformation.passing}
@@ -308,6 +317,7 @@ export default function AddCardForm() {
                       defending: e.target.value,
                     })
                   }
+                  sx={{ backgroundColor: "white" }}
                 />
               </FormControl>
               <FormControl sx={{ m: 1, width: "12%" }}>
@@ -328,6 +338,7 @@ export default function AddCardForm() {
                       stamina: e.target.value,
                     })
                   }
+                  sx={{ backgroundColor: "white" }}
                 />
               </FormControl>
               <FormControl sx={{ m: 1, width: "48%" }}>
@@ -335,6 +346,7 @@ export default function AddCardForm() {
                 <Select
                   multiple
                   value={chooseCategory}
+                  sx={{ backgroundColor: "white" }}
                   onChange={(e) => {
                     setChooseCategory(e.target.value);
                     setFormInformation({
@@ -360,6 +372,7 @@ export default function AddCardForm() {
                 <InputLabel>Tier</InputLabel>
                 <Select
                   label="tier"
+                  sx={{ backgroundColor: "white" }}
                   value={chooseTier}
                   onChange={(e) => {
                     setChooseTier(e.target.value);
@@ -392,6 +405,7 @@ export default function AddCardForm() {
                       price: e.target.value,
                     })
                   }
+                  sx={{ backgroundColor: "white" }}
                 />
               </FormControl>
               <FormControl sx={{ m: 1, width: "48%" }}>
@@ -405,6 +419,7 @@ export default function AddCardForm() {
                       package: choosePack,
                     });
                   }}
+                  sx={{ backgroundColor: "white" }}
                   input={<OutlinedInput label="Pack" />}
                   fullWidth
                   defaultValue={packs[0]}

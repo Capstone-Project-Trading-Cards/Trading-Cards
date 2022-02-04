@@ -49,8 +49,11 @@ export default function Register() {
   return (
     <div>
       <Navbar />
+      <Typography mt={6} variant="h4" textAlign="center">
+        Register Now
+      </Typography>
       <Box
-        mt={6}
+        mt={4}
         lg={12}
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
@@ -67,6 +70,7 @@ export default function Register() {
                 onChange={(e) => setUsername(e.target.value)}
                 label="Username"
                 margin="normal"
+                sx={{ backgroundColor: "white" }}
               />
             </FormControl>
             <FormControl>
@@ -76,6 +80,7 @@ export default function Register() {
                 onChange={(e) => setEmail(e.target.value)}
                 label="Email Address"
                 margin="normal"
+                sx={{ backgroundColor: "white" }}
               />
             </FormControl>
             <FormControl>
@@ -85,6 +90,7 @@ export default function Register() {
                 onChange={(e) => setPassword(e.target.value)}
                 label="Password"
                 margin="normal"
+                sx={{ backgroundColor: "white" }}
               />
             </FormControl>
             <FormControl>
@@ -100,6 +106,7 @@ export default function Register() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 label="Re-enter Password"
                 margin="normal"
+                sx={{ backgroundColor: "white" }}
               />
             </FormControl>
             <Stack m={4}>
@@ -113,6 +120,9 @@ export default function Register() {
       <Box class="text-muted">
         <Typography textAlign="center">
           Do you have an account? <Link to="/login">Login</Link>
+        </Typography>
+        <Typography mt={6} textAlign="center">
+          Trading Cards Co. &copy;
         </Typography>
       </Box>
     </div>

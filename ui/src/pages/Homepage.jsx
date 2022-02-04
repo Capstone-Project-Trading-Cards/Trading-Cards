@@ -49,12 +49,15 @@ export default function Homepage() {
     <Box
       sx={{
         height: "100vh",
-        width: "100vw",
-        overflow: "hidden",
+        width: "100%",
+        margin: 0,
+        boxSizing: "border-box",
       }}
     >
       <Navbar user={user} isLoggedIn={isLoggedIn} />
-      <Box sx={{ position: "relative" }}>
+      <Box
+        sx={{ position: "relative", height: "100%", width: "100%", margin: 0 }}
+      >
         <img
           src={BackgroundImage}
           style={{

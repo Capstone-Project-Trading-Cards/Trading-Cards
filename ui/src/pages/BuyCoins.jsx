@@ -172,10 +172,10 @@ export default function BuyCoins() {
                   display: "flex",
                   flexDirection: "column",
                   height: "100%",
+                  width: "18%",
                 }}
               >
                 <img
-                  width="160px"
                   src={TCCLogo1}
                   sx={{ position: "relative" }}
                   alt="50.000 TCC"
@@ -189,8 +189,10 @@ export default function BuyCoins() {
                   50.000 TCC
                 </Button>
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <img width="160px" src={TCCLogo2} alt="100.000 TCC" />
+              <Box
+                sx={{ display: "flex", flexDirection: "column", width: "18%" }}
+              >
+                <img src={TCCLogo2} alt="100.000 TCC" />
                 <Button
                   variant="contained"
                   value={buttonValue}
@@ -200,8 +202,10 @@ export default function BuyCoins() {
                   100.000 TCC
                 </Button>
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <img width="160px" src={TCCLogo3} alt="200.000 TCC" />
+              <Box
+                sx={{ display: "flex", flexDirection: "column", width: "18%" }}
+              >
+                <img src={TCCLogo3} alt="200.000 TCC" />
                 <Button
                   variant="contained"
                   value={buttonValue}
@@ -211,8 +215,10 @@ export default function BuyCoins() {
                   200.000 TCC
                 </Button>
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <img width="160px" src={TCCLogo4} alt="500.000 TCC" />
+              <Box
+                sx={{ display: "flex", flexDirection: "column", width: "18%" }}
+              >
+                <img src={TCCLogo4} alt="500.000 TCC" />
                 <Button
                   variant="contained"
                   value={buttonValue}
