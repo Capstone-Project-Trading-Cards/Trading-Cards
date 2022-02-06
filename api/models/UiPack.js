@@ -6,9 +6,9 @@ const PackSchema = mongoose.Schema({
     required: true,
     unique: true,
   },
-  packRarity: { type: String, required: true },
+  packRarity: { type: Number, required: true },
   price: { type: Number, required: true },
-  items: [{ type: mongoose.Schema.Types.ObjectId, ref: "Card" }],
+  numberOfCards: { type: Number },
 });
 
 const pack = mongoose.model("Pack", PackSchema);
