@@ -3,15 +3,11 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Box, Button, Typography } from "@mui/material";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
-import TCCLogo1 from "../images/soccer-player-cards/Haaland.png";
-import TCCLogo2 from "../images/soccer-player-cards/Messi.png";
-import TCCLogo3 from "../images/soccer-player-cards/RONALDO.png";
-import TCCLogo4 from "../images/soccer-player-cards/Lewandowski.png";
-import TCCLogo5 from "../images/soccer-player-cards/Salah.png";
-
+import HaalandBackground from "../images/haaland-background.png";
+import RonaldoBackground from "../images/ronaldo-background.png";
 import Footer from "../components/Footer";
 
-export default function Homepage() {
+export default function Welcome() {
   const [cardData, setCardData] = useState([{}]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState();
@@ -26,7 +22,6 @@ export default function Homepage() {
         console.log(res);
       })
       .catch((err) => console.log(err));
-
     // get user
     axios
       .get("/api/getUsername", {
@@ -49,13 +44,16 @@ export default function Homepage() {
     <Box
       sx={{
         height: "100vh",
-        width: "100vw",
+        width: "100%",
         margin: 0,
-        overflowX: "hidden",
+        boxSizing: "border-box",
       }}
     >
       <Navbar user={user} isLoggedIn={isLoggedIn} />
-      <Box sx={{ position: "relative", height: "100%", width: "100vw" }}>
+      <Box
+        container
+        sx={{ position: "relative", margin: 0, height: "100%", width: "100%" }}
+      >
         <img
           src={BackgroundImage}
           style={{
@@ -63,10 +61,9 @@ export default function Homepage() {
             position: "fixed",
             left: 0,
             top: 0,
-            width: "99vw",
+            width: "100%",
             height: "auto",
             zIndex: 0,
-            margin: 0,
             minHeight: "100%",
             minWidth: "1024px",
           }}
@@ -74,32 +71,27 @@ export default function Homepage() {
         />
         <Box sx={{ position: "relative" }} mb={2}>
           <Box
+            mt={6}
             sx={{
               display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              justifyContent: "space-around",
+              width: "100%",
             }}
           >
-            <Box
-              mt={6}
-              sx={{ display: "flex", justifyContent: "space-around" }}
-            >
-              <img width="18%" src={TCCLogo1} />
-              <img width="18%" src={TCCLogo4} />
-              <img width="18%" src={TCCLogo2} />
-              <img width="18%" src={TCCLogo5} />
-              <img width="18%" src={TCCLogo3} />
+            <Box sx={{ width: "30%" }}>
+              <img width="350px" src={HaalandBackground} />
             </Box>
-            <Typography mt={2} variant="h2" color="white">
-              Trading Cards Co.
-            </Typography>
-            <Typography variant="body2" mt={2} color="white">
-              Buy, Collect, Trade Cards. Start Now!
-            </Typography>
-            <Box mt={2}>
-              <Button href="/buyCoins" variant="contained">
-                Buy Coins
-              </Button>
+            <Box>
+              <Typography sx={{ width: "100%" }} variant="h3" color="white">
+                Trading Cards Co.
+              </Typography>
+              <Box>
+                <Button variant="contained">Login</Button>
+                <Button variant="contained">Register</Button>
+              </Box>
+            </Box>
+            <Box sx={{ width: "30%" }}>
+              <img width="600px" src={RonaldoBackground} />
             </Box>
           </Box>
         </Box>

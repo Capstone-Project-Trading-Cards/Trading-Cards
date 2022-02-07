@@ -49,6 +49,16 @@ router.get("/:packid", async (req, res) => {
   }
 });
 
+router.post("/addPack", async (req, res) => {
+  try {
+    const pack = new UiPack(req.body);
+    const newPack = pack.save();
+    res.status(200).send("Pack created");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 /*
 const generateNewCards = (packId) => {
   // TODO: Get random 6 cards from pack, use the same data to duplicate the card that is already in the pack

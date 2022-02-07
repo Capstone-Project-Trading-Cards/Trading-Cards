@@ -7,6 +7,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import BuyCoins from "./pages/BuyCoins";
 import Packs from "./pages/Packs";
+import Profile from "./pages/Profile";
+import Welcome from "./pages/Welcome";
+import Pack from "./pages/Pack";
 
 function App() {
   return (
@@ -18,7 +21,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/packs" element={<Packs />} />
+        <Route path="/packs/:packId" element={<Pack />} />
         <Route path="/buyCoins" element={<BuyCoins />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/welcome" element={<Welcome />} />
       </Routes>
     </BrowserRouter>
   );

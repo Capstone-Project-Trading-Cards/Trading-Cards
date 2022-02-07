@@ -96,29 +96,28 @@ export default function BuyCoins() {
   }, []);
 
   return (
-    <Box sx={{ height: "100vh", width: "100%" }}>
+    <Box sx={{ height: "100vh", width: "100%", overflowX: "hidden" }}>
       <Navbar user={user} isLoggedIn={isLoggedIn} />
       <Box
-        container
         mb={6}
         sx={{
           height: "100%",
-          width: "100%",
-          position: "relative",
-          boxSizing: "border-box",
+          width: "100vw",
           margin: 0,
+          position: "relative",
         }}
       >
         <img
           src={BackgroundImage}
           style={{
-            opacity: "0.95",
+            opacity: "0.90",
             position: "fixed",
             left: 0,
             top: 0,
-            width: "100%",
+            width: "99vw",
             height: "auto",
             zIndex: 0,
+            margin: 0,
             minHeight: "100%",
             minWidth: "1024px",
           }}
@@ -175,6 +174,9 @@ export default function BuyCoins() {
                   width: "18%",
                 }}
               >
+                <Typography variant="h5" color="white" textAlign="center">
+                  $10.00
+                </Typography>
                 <img
                   src={TCCLogo1}
                   sx={{ position: "relative" }}
@@ -192,6 +194,9 @@ export default function BuyCoins() {
               <Box
                 sx={{ display: "flex", flexDirection: "column", width: "18%" }}
               >
+                <Typography variant="h5" color="white" textAlign="center">
+                  $20.00
+                </Typography>
                 <img src={TCCLogo2} alt="100.000 TCC" />
                 <Button
                   variant="contained"
@@ -205,6 +210,9 @@ export default function BuyCoins() {
               <Box
                 sx={{ display: "flex", flexDirection: "column", width: "18%" }}
               >
+                <Typography variant="h5" color="white" textAlign="center">
+                  $30.00
+                </Typography>
                 <img src={TCCLogo3} alt="200.000 TCC" />
                 <Button
                   variant="contained"
@@ -218,6 +226,9 @@ export default function BuyCoins() {
               <Box
                 sx={{ display: "flex", flexDirection: "column", width: "18%" }}
               >
+                <Typography variant="h5" color="white" textAlign="center">
+                  $50.00
+                </Typography>
                 <img src={TCCLogo4} alt="500.000 TCC" />
                 <Button
                   variant="contained"

@@ -9,6 +9,11 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import PersonIcon from "@mui/icons-material/Person";
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import CollectionsIcon from "@mui/icons-material/Collections";
+import LogoutIcon from "@mui/icons-material/Logout";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -73,10 +78,21 @@ export default function Navbar(props) {
     navigate("/login");
   }
 
+  function handleGetMoreCoins() {
+    navigate("/buyCoins");
+  }
+
+  function handleProfile() {
+    navigate("/profile");
+  }
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <nav
+      style={{ borderBottom: "3px solid #2C3333" }}
+      className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top"
+    >
       <div className="container">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           Trading Cards Co.
         </a>
         <button
@@ -93,61 +109,30 @@ export default function Navbar(props) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <div>
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item active">
-                <Link className="nav-link" to="/">
+              <li className="m-1">
+                <Button
+                  sx={{ backgroundColor: "#1565C0" }}
+                  href="/"
+                  variant="contained"
+                >
                   Home
-                </Link>
+                </Button>
               </li>
-              <Button
-                id="demo-customized-button"
-                size="small"
-                aria-controls={open ? "demo-customized-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                variant="contained"
-                disableElevation
-                onClick={handleClick}
-                endIcon={<KeyboardArrowDownIcon />}
-              >
-                Admin
-              </Button>
-              <StyledMenu
-                id="demo-customized-menu"
-                MenuListProps={{
-                  "aria-labelledby": "demo-customized-button",
-                }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose} disableRipple>
-                  <EditIcon />
-                  Edit
-                </MenuItem>
-                <MenuItem onClick={handleClose} disableRipple>
-                  <FileCopyIcon />
-                  Duplicate
-                </MenuItem>
-                <Divider sx={{ my: 0.5 }} />
-                <MenuItem onClick={handleClose} disableRipple>
-                  <ArchiveIcon />
-                  Archive
-                </MenuItem>
-                <MenuItem onClick={handleClose} disableRipple>
-                  <MoreHorizIcon />
-                  More
-                </MenuItem>
-              </StyledMenu>
-              <li className="nav-item">
-                <a className="nav-link disabled" href="#">
-                  Disabled
-                </a>
+              <li className="m-1">
+                <Button href="/packs" variant="contained">
+                  Packs
+                </Button>
+              </li>
+              <li className="m-1">
+                <Button href="/" variant="contained">
+                  Trades
+                </Button>
               </li>
             </ul>
           </div>
-          <div className="ml-auto">
+          <div className="ml-auto m-1">
             <form className="form-inline my-2 my-lg-0">
-              <div className="d-flex">
+              <div className="d-flex m-1">
                 <input
                   className="form-control mr-sm-2"
                   type="search"
@@ -180,17 +165,47 @@ export default function Navbar(props) {
                   width: "200px",
                 }}
               >
-                <Button size="small" variant="contained">
+                <Button
+                  id="demo-customized-button"
+                  variant="contained"
+                  onClick={handleClick}
+                  endIcon={<KeyboardArrowDownIcon />}
+                  size="small"
+                >
                   {props.user.username}
                 </Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="small"
-                  onClick={handleLogout}
+                <StyledMenu
+                  id="demo-customized-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
                 >
-                  Logout
-                </Button>
+                  <MenuItem onClick={handleProfile}>
+                    <PersonIcon />
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={handleClose} disableRipple>
+                    <CollectionsIcon />
+                    My Collection
+                  </MenuItem>
+                  <MenuItem onClick={handleClose} disableRipple>
+                    <EditIcon />
+                    Trade Requests 1
+                  </MenuItem>
+                  <Divider sx={{ my: 0.5 }} />
+                  <MenuItem disableRipple onClick={handleGetMoreCoins}>
+                    <MonetizationOnIcon />
+                    Get More Coins
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout} disableRipple>
+                    <LogoutIcon />
+                    Logout
+                  </MenuItem>
+                </StyledMenu>
+                <Typography variant="body1" m={1} sx={{ color: "yellow" }}>
+                  <MonetizationOnIcon />
+                  {props.user.coinBalance}
+                </Typography>
               </Box>
             </div>
           ) : (

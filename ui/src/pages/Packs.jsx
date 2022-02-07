@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Box, Button, Typography } from "@mui/material";
-import PackLogo1 from "../images/soccer-player-cards/RONALDO.png";
-import PackLogo2 from "../images/soccer-player-cards/Foden.png";
-import PackLogo3 from "../images/soccer-player-cards/Neymar.png";
+import Forwards from "../images/soccer-player-cards/RONALDO.png";
+import Golds from "../images/soccer-player-cards/Foden.png";
+import Diamonds from "../images/soccer-player-cards/Neymar.png";
 import PackLogo4 from "../images/soccer-player-cards/De Bruyne.png";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
 import Footer from "../components/Footer";
@@ -53,9 +53,9 @@ export default function Packs() {
     <Box
       sx={{
         height: "100vh",
-        width: "100%",
+        width: "100vw",
         margin: 0,
-        boxSizing: "border-box",
+        overflowX: "hidden",
       }}
     >
       <Navbar user={user} isLoggedIn={isLoggedIn} />
@@ -71,23 +71,25 @@ export default function Packs() {
         mb={6}
         sx={{
           height: "100%",
-          width: "100%",
-          margin: 0,
+          width: "100vw",
           position: "relative",
+          margin: 0,
         }}
       >
         <img
           src={BackgroundImage}
           style={{
-            opacity: "0.95",
+            opacity: "0.90",
             position: "fixed",
             left: 0,
             top: 0,
-            width: "100%",
+            width: "99vw",
             height: "auto",
             zIndex: 0,
+            margin: 0,
             minHeight: "100%",
             minWidth: "1024px",
+            overflow: "hidden",
           }}
           alt="background"
         />
@@ -126,87 +128,48 @@ export default function Packs() {
           onSubmit={handleSubmit}
           sx={{ display: "flex", justifyContent: "center", width: "100%" }}
         >
-          <Box sx={{ zIndex: 1, width: "100%" }} mt={6}>
+          <Box sx={{ zIndex: 1, width: "95%" }} mt={6}>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-around",
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%",
-                  width: "18%",
-                }}
-              >
-                <Typography variant="h6" color="white" textAlign="center">
-                  50.000 TCC
-                </Typography>
-                <img
-                  src={PackLogo1}
-                  sx={{ position: "relative" }}
-                  alt="Forwards Pack"
-                />
-                <Button
-                  variant="contained"
-                  value={buttonValue}
-                  onClick={() => setButtonValue("forwards")}
-                  type="submit"
+              {packData.map((pack) => (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",
+                    width: "18%",
+                  }}
                 >
-                  Forwards Pack
-                </Button>
-              </Box>
-
-              <Box
-                sx={{ display: "flex", flexDirection: "column", width: "18%" }}
-              >
-                <Typography variant="h6" color="white" textAlign="center">
-                  100.000 TCC
-                </Typography>
-                <img src={PackLogo2} alt="Golds pack" />
-                <Button
-                  variant="contained"
-                  value={buttonValue}
-                  onClick={() => setButtonValue("golds")}
-                  type="submit"
-                >
-                  Golds Pack
-                </Button>
-              </Box>
-              <Box
-                sx={{ display: "flex", flexDirection: "column", width: "18%" }}
-              >
-                <Typography variant="h6" color="white" textAlign="center">
-                  250.000 TCC
-                </Typography>
-                <img src={PackLogo3} alt="Diamonds Pack" />
-                <Button
-                  variant="contained"
-                  value={buttonValue}
-                  onClick={() => setButtonValue("diamonds")}
-                  type="submit"
-                >
-                  Diamonds Pack
-                </Button>
-              </Box>
-              <Box
-                sx={{ display: "flex", flexDirection: "column", width: "18%" }}
-              >
-                <Typography variant="h6" color="white" textAlign="center">
-                  500.000 TCC
-                </Typography>
-                <img src={PackLogo4} alt="Rare Cards" />
-                <Button
-                  variant="contained"
-                  value={buttonValue}
-                  onClick={() => setButtonValue("rare")}
-                  type="submit"
-                >
-                  Rare Cards Pack
-                </Button>
-              </Box>
+                  <Typography variant="h5" color="white" textAlign="center">
+                    {pack.price} TCC
+                  </Typography>
+                  <img
+                    src={
+                      pack.name === "Forwards Pack"
+                        ? Forwards
+                        : pack.name === "Golds Pack"
+                        ? Golds
+                        : pack.name === "Diamonds Pack"
+                        ? Diamonds
+                        : PackLogo4
+                    }
+                    sx={{ position: "relative" }}
+                    alt="Forwards Pack"
+                  />
+                  <Button
+                    variant="contained"
+                    value={buttonValue}
+                    href={`packs/${pack._id}`}
+                    type="submit"
+                  >
+                    {pack.name}
+                  </Button>
+                </Box>
+              ))}
             </Box>
           </Box>
         </Box>

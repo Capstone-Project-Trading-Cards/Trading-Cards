@@ -17,8 +17,12 @@ export default function Footer() {
         Trading Cards Co. 2022
       </Typography>
       <ButtonGroup variant="text" aria-label="text button group">
-        <Button sx={{ color: "white" }} startIcon={<PrivacyTipIcon />}>
-          Privacy
+        <Button
+          href="/about"
+          sx={{ color: "white" }}
+          startIcon={<PrivacyTipIcon />}
+        >
+          About
         </Button>
         <Button sx={{ color: "white" }} startIcon={<GavelIcon />}>
           Terms
