@@ -3,10 +3,10 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Navbar from "../components/Navbar";
-import TCCLogo1 from "../images/soccer-player-cards/Haaland.png";
-import TCCLogo2 from "../images/soccer-player-cards/Salah.png";
-import TCCLogo3 from "../images/soccer-player-cards/Mbappé.png";
-import TCCLogo4 from "../images/soccer-player-cards/Lewandowski.png";
+import TCCLogo1 from "../images/soccer-player-cards/rare/Haaland.png";
+import TCCLogo2 from "../images/soccer-player-cards/rare/Salah.png";
+import TCCLogo3 from "../images/soccer-player-cards/rare/Mbappé.png";
+import TCCLogo4 from "../images/soccer-player-cards/rare/Lewandowski.png";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
 import Footer from "../components/Footer";
 
@@ -114,7 +114,7 @@ export default function BuyCoins() {
             position: "fixed",
             left: 0,
             top: 0,
-            width: "99vw",
+            width: "100vw",
             height: "auto",
             zIndex: 0,
             margin: 0,

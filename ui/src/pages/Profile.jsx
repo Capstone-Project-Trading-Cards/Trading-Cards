@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
-import ProfilePicture from "../images/fifa-background3.png";
+import ProfilePicture from "../images/pack-background4.png";
 import IconPicture1 from "../images/fifa-background2.png";
 import IconPicture2 from "../images/red-card.png";
 import IconPicture3 from "../images/fifa-background6.png";
@@ -75,23 +75,31 @@ export default function Profile() {
   return (
     <Box
       sx={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
+        height: "100vh",
+        width: "100vw",
+        overflowX: "hidden",
       }}
     >
       <Navbar user={user} isLoggedIn={isLoggedIn} />
-      <Box sx={{ position: "relative", height: "100%", width: "100vw" }}>
+      <Box
+        sx={{
+          position: "relative",
+          height: "100vh",
+          width: "100%",
+          position: "relative",
+        }}
+      >
         <img
           src={BackgroundImage}
           style={{
-            opacity: "0.90",
+            opacity: "0.95",
             position: "fixed",
             left: 0,
             top: 0,
-            width: "100vw",
+            width: "99.1vw",
             height: "auto",
             zIndex: 0,
+            margin: 0,
             minHeight: "100%",
             minWidth: "1024px",
           }}

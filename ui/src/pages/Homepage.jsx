@@ -3,11 +3,11 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Box, Button, Typography } from "@mui/material";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
-import TCCLogo1 from "../images/soccer-player-cards/Haaland.png";
-import TCCLogo2 from "../images/soccer-player-cards/Messi.png";
-import TCCLogo3 from "../images/soccer-player-cards/RONALDO.png";
-import TCCLogo4 from "../images/soccer-player-cards/Lewandowski.png";
-import TCCLogo5 from "../images/soccer-player-cards/Salah.png";
+import TCCLogo1 from "../images/soccer-player-cards/rare/Haaland.png";
+import TCCLogo2 from "../images/soccer-player-cards/rare/Messi.png";
+import TCCLogo3 from "../images/soccer-player-cards/rare/Ronaldo.png";
+import TCCLogo4 from "../images/soccer-player-cards/rare/Lewandowski.png";
+import TCCLogo5 from "../images/soccer-player-cards/rare/Salah.png";
 
 import Footer from "../components/Footer";
 
@@ -97,8 +97,8 @@ export default function Homepage() {
               Buy, Collect, Trade Cards. Start Now!
             </Typography>
             <Box mt={2}>
-              <Button href="/buyCoins" variant="contained">
-                Buy Coins
+              <Button href="/register" variant="contained">
+                Get Started
               </Button>
             </Box>
           </Box>

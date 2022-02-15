@@ -112,10 +112,10 @@ export default function Navbar(props) {
               <li className="m-1">
                 <Button
                   sx={{ backgroundColor: "#1565C0" }}
-                  href="/"
+                  href="/buyCoins"
                   variant="contained"
                 >
-                  Home
+                  Coins
                 </Button>
               </li>
               <li className="m-1">

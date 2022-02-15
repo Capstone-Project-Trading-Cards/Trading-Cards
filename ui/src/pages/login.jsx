@@ -12,15 +12,19 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { login } from "../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function handleLogin(e) {
     e.preventDefault();
+    // dispatch(login({ username: username, password: password }));
 
     axios
       .post("/api/login", {
@@ -36,7 +40,7 @@ export default function Login() {
         }
         console.log(`data from api login ${data.status}`);
         localStorage.setItem("token", data.token);
-        navigate("/");
+        navigate("/profile");
       });
 
     //axios.post("/api/packs")

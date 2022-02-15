@@ -3,25 +3,19 @@ const multer = require("multer");
 const fs = require("fs");
 const Card = require("../models/Card");
 const UserCollection = require("../models/UserCollection");
+const path = require("path");
 
 // Sets up where to store POST images
 const storage = multer.diskStorage({
-  destination: (request, file, callback) => {
-    callback(null, "../public/uploads/images");
-  },
-  // add back the extension that multer removed
-  filename: (request, file, callback) => {
-    callback(null, Date.now() + file.originalname);
+  destination: "./public/uploads/images/",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
   },
 });
 
-// upload parameter for multer
-// defining the storage and the upload limit
 const upload = multer({
   storage: storage,
-  destination: function (req, res, cb) {
-    cb(null, "uploads/");
-  },
+  limits: { fieldSize: 10 * 1024 * 1024 },
 });
 
 // get all the cards on the homepage
@@ -35,7 +29,8 @@ router.get("/", async (req, res) => {
 });
 
 // name image matches with the input name image
-router.post("/add", async (req, res) => {
+router.post("/add", upload.single("cardImage"), (req, res) => {
+  console.log(req.files, req.body.name);
   const newCard = new Card({
     name: req.body.name,
     rating: req.body.rating,
@@ -47,6 +42,7 @@ router.post("/add", async (req, res) => {
     speed: req.body.speed,
     power: req.body.power,
     vision: req.body.vision,
+    image: req.files.originalname,
     passing: req.body.passing,
     defending: req.body.defending,
     stamina: req.body.stamina,
@@ -56,11 +52,8 @@ router.post("/add", async (req, res) => {
     // when user puts the cards up for trade switch to true, it is false as default
     package: req.body.package,
   });
-
-  newCard.image.data = fs.readFileSync(req.body.image);
-  newCard.image.type = "image/jpeg";
   try {
-    const savedCard = await newCard.save();
+    const savedCard = newCard.save();
     res.status(200).send(savedCard);
   } catch (err) {
     res.status(500).send(err);

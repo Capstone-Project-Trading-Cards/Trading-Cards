@@ -3,6 +3,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const fileupload = require("express-fileupload");
 
 // import routes
 const cardsRoute = require("./routes/cards");
@@ -16,6 +17,7 @@ dotenv.config();
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileupload());
 
 const dbURI = process.env.MONGO_DB;
 

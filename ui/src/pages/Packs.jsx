@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Box, Button, Typography } from "@mui/material";
-import Forwards from "../images/soccer-player-cards/RONALDO.png";
-import Golds from "../images/soccer-player-cards/Foden.png";
-import Diamonds from "../images/soccer-player-cards/Neymar.png";
-import PackLogo4 from "../images/soccer-player-cards/De Bruyne.png";
+import Forwards from "../images/pack-background3.png";
+import Golds from "../images/pack-background4.png";
+import Diamonds from "../images/pack-background2.png";
+import PackLogo4 from "../images/soccer-player-cards/rare/De Bruyne.png";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
 import Footer from "../components/Footer";
 
@@ -83,7 +83,7 @@ export default function Packs() {
             position: "fixed",
             left: 0,
             top: 0,
-            width: "99vw",
+            width: "99.1vw",
             height: "auto",
             zIndex: 0,
             margin: 0,

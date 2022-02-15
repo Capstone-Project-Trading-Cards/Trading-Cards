@@ -9,14 +9,13 @@ const CardSchema = mongoose.Schema(
     // category that it belongs to could be more than one
     category: { type: Array },
     // rarity
-    tier: { type: String, required: true },
+    tier: { type: String },
     price: { type: Number, required: true },
-    image: { data: Buffer, type: String, default: "no-pic" },
+    image: { type: String },
     // owner of the card it is connected to our User model
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      default: "tradingcards.co",
     },
     speed: { type: Number, required: true },
     power: { type: Number, required: true },

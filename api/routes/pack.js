@@ -162,10 +162,10 @@ const drawCards = async (numberOfCards, pack, cardRange, userId) => {
   return drawnCards;
 };
 
-router.post("/:packid", async (req, res) => {
+router.post("/showcase/:packid", async (req, res) => {
   const uiPackId = req.params.packid;
   const userId = req.body.userId;
-  const drawnCards = [];
+  var drawnCards = [];
   try {
     // get the package details that user chose
     const uiPack = await UiPack.findById(uiPackId);

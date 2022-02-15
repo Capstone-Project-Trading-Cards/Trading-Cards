@@ -10,12 +10,15 @@ import Packs from "./pages/Packs";
 import Profile from "./pages/Profile";
 import Welcome from "./pages/Welcome";
 import Pack from "./pages/Pack";
+import Showcase from "./pages/Showcase";
+import AllCards from "./pages/AllCards";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Homepage />} />
+        <Route exact path="/cards" element={<AllCards />} />
         <Route path="/about" element={<About />} />
         <Route path="/addCard" element={<AddCardForm />} />
         <Route path="/login" element={<Login />} />
@@ -25,6 +28,7 @@ function App() {
         <Route path="/buyCoins" element={<BuyCoins />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/welcome" element={<Welcome />} />
+        <Route path="/showcase/:packId" element={<Showcase />} />
       </Routes>
     </BrowserRouter>
   );
