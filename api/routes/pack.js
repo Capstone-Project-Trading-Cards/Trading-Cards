@@ -8,6 +8,7 @@ const HighTierPack = require("../models/HighTierPack");
 const UserCollection = require("../models/UserCollection");
 const User = require("../models/User");
 const Card = require("../models/Card");
+const Pack = require("../models/Pack")
 
 // Sets up where to store POST images
 const storage = multer.diskStorage({
@@ -32,7 +33,7 @@ const upload = multer({
 // get all packs
 router.get("/", async (req, res) => {
   try {
-    const packs = await UiPack.find();
+    const packs = await Pack.find();
     res.status(200).send(packs);
   } catch (err) {
     res.status(500).send(err);
@@ -51,13 +52,41 @@ router.get("/:packid", async (req, res) => {
 
 router.post("/addPack", async (req, res) => {
   try {
-    const pack = new UiPack(req.body);
+    const pack = new Pack(req.body);
+    console.log(pack)
     const newPack = pack.save();
     res.status(200).send("Pack created");
   } catch (err) {
     res.status(500).send(err);
   }
 });
+
+router.get("/:packid/open/:cardnum", async (req, res) => {
+  try {
+    // get pack and card numbers
+    const pack = await Pack.findById(req.params.packid)
+    const numCards = req.params.cardnum
+    // get cards that are in pack
+    const allCards = await Card.find({pack: pack.name})
+    const cardsToSend = []
+    const cardLength = allCards.length
+    // get a random card from all the cards in pack, send those cards, are duplicates
+    if(cardLength >= numCards) {
+      for(let i = 0; i < numCards; i++) {
+        var random = Math.floor(Math.random() * cardLength)
+        cardsToSend.push(await Card.findOne().skip(random))
+      }
+      // can add cards to user collection here
+
+      // send cards to ui
+      res.send(cardsToSend)
+    } else {
+      res.status(500).send({"err": `Not enough cards in pack to open ${numCards} cards`})
+    }
+  } catch(err) {
+    res.status(500).send(err);
+  }
+})
 
 /*
 const generateNewCards = (packId) => {

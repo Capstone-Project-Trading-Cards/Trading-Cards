@@ -12,6 +12,7 @@ import Welcome from "./pages/Welcome";
 import Pack from "./pages/Pack";
 import Showcase from "./pages/Showcase";
 import AllCards from "./pages/AllCards";
+import AddPackForm from './pages/AddPackForm'
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/showcase/:packId" element={<Showcase />} />
+        <Route path="/addPack" element={<AddPackForm/>}/>
       </Routes>
     </BrowserRouter>
   );
