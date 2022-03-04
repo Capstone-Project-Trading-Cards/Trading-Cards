@@ -7,7 +7,7 @@ const MidTierPack = require("../models/MidTierPack");
 const HighTierPack = require("../models/HighTierPack");
 const UserCollection = require("../models/UserCollection");
 const User = require("../models/User");
-const Card = require("../models/Card");
+const Card = require("../models/Card").Card;
 const Pack = require("../models/Pack")
 
 // Sets up where to store POST images
@@ -50,6 +50,7 @@ router.get("/:packid", async (req, res) => {
   }
 });
 
+// create pack
 router.post("/addPack", async (req, res) => {
   try {
     const pack = new Pack(req.body);

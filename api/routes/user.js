@@ -1,7 +1,7 @@
 const router = require("express").Router();
+const { findByIdAndUpdate } = require("../models/User");
 const User = require("../models/User");
-const Card = require("../models/Card");
-const UserCollection = require("../models/UserCollection");
+const Card = require("../models/Card").Card;
 
 // schema test
 User.schema.static.adjustUserBalance = function (
@@ -41,16 +41,77 @@ router.post("/profile/:userId", async (req, res) => {
 
 // view users collection
 // first get all the cards then check if user's id is matching with owner's id
-router.get("/collection/:userId", async (req, res) => {
-  try {
-    const cards = await Card.find({ owner: { $eq: req.params.userId } });
-    // const collection = Collection.find({ owner: { $eq: req.params.userId } });
-    res.status(200).send(cards);
-  } catch (err) {
-    res.status(500).send(err);
+router.get("/collection/:username", async (req, res) => {
+  console.log('here')
+  var user = await User.findOne({username: req.params.username})
+  
+  if(!user) {
+    res.status(500).send({"err": "user not found"})
+  } else {
+    user = user.toObject()
+    console.log(user.cardCollection)
+    res.status(200).send(user.cardCollection)
   }
-});
+})
 
+// add card on pack open
+router.post('/collection/add', async(req, res) => {
+  console.log(req.body.username)
+  console.log(req.body.cardId)
+  // get card
+  var card = await Card.findById(req.body.cardId)
+  // get user
+  var user = await User.find({username: req.body.username})
+  if(!card) {
+    // card not found
+    res.status(500).send("err: card not found")
+  } else if (!user) {
+    // user not found
+    res.status(500).send("err: user not found")
+  } else {
+    // add card to users collection
+    await User.findOneAndUpdate(
+      {username: req.body.username},
+      {$push: {cards: card}},
+      {new: true, upsert: true }
+    )
+    
+    var user = await User.findOne({username: req.body.username})
+    //console.log("Card collection",  user.cardCollection)
+    //console.log(user["cardCollection"])
+    user = user.toObject()
+    console.log(user.cardCollection)
+    res.status(200).send(user)
+  }
+})
+
+// sell card when pack is opened
+router.post('/card/sell', async(req, res) => {
+  console.log(req.body.username)
+  console.log(req.body.cardId)
+  // get card
+  var card = await Card.findById(req.body.cardId)
+  // get user
+  var user = await User.findById({username: req.body.username})
+  if(!card) {
+    // card not found
+    res.status(500).send("err: card not found")
+  } else if (!user) {
+    // user not found
+    res.status(500).send("err: user not found")
+  } else {
+    // add coins to user
+    const updatedUser = await User.findByIdAndUpdate(
+      user._id,
+      {
+        $set: {coinBalance: user.coinBalance + (card.price * 0.3)}
+      }
+    )
+    res.status(200).send('card sold')
+  }
+})
+
+// create user
 router.post("/new", async (req, res) => {
   const newUser = new User(req.body);
   try {
@@ -61,6 +122,7 @@ router.post("/new", async (req, res) => {
   }
 });
 
+// add coins to user acount
 router.post("/buyCoins", async (req, res) => {
   const coinBalance = req.body.coinBalance;
   const moneyBalance = req.body.moneyBalance;
@@ -79,6 +141,7 @@ router.post("/buyCoins", async (req, res) => {
   }
 });
 
+// get users balance
 router.get("/getUserBalance", async (req, res) => {
   const user = await User.find(req.body.userId);
   res.send(user.coinBalance);
