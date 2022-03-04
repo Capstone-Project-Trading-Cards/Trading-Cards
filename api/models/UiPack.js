@@ -11,6 +11,6 @@ const PackSchema = mongoose.Schema({
   numberOfCards: { type: Number },
 });
 
-const pack = mongoose.model("Pack", PackSchema);
+const pack = mongoose.model("UiPack", PackSchema);
 
 module.exports = pack;

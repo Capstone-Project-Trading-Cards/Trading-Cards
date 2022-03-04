@@ -4,6 +4,7 @@ const fs = require("fs");
 const Card = require("../models/Card");
 const UserCollection = require("../models/UserCollection");
 const path = require("path");
+const Pack = require('../models/Pack')
 
 // Sets up where to store POST images
 const storage = multer.diskStorage({
@@ -28,30 +29,28 @@ router.get("/", async (req, res) => {
   }
 });
 
-// name image matches with the input name image
-router.post("/add", upload.single("cardImage"), (req, res) => {
-  console.log(req.files, req.body.name);
-  const newCard = new Card({
-    name: req.body.name,
-    rating: req.body.rating,
-    // category that it belongs to could be more than one
-    category: req.body.category,
-    // rarity
-    tier: req.body.tier,
-    price: req.body.price,
-    speed: req.body.speed,
-    power: req.body.power,
-    vision: req.body.vision,
-    image: req.files.originalname,
-    passing: req.body.passing,
-    defending: req.body.defending,
-    stamina: req.body.stamina,
+// get cards by id
+router.get("/pack/:id", async (req, res) => {
+  try {
+    const pack = await Pack.findById(req.params.id)
+    if(pack) {
+      const cards = await Card.find({pack: pack.name});
+      console.log('done')
+      res.statusCode = 200
+      res.send(cards);
+    }else {
+      res.status(500).send({"err": "Pack not found"});
+    }
+    
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
-    nationality: req.body.nationality,
-    team: req.body.team,
-    // when user puts the cards up for trade switch to true, it is false as default
-    package: req.body.package,
-  });
+// name image matches with the input name image
+router.post("/add", (req, res) => {
+  console.log(req.body);
+  const newCard = new Card(req.body);
   try {
     const savedCard = newCard.save();
     res.status(200).send(savedCard);
