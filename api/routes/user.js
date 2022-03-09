@@ -61,7 +61,7 @@ router.post('/collection/add', async(req, res) => {
   // get card
   var card = await Card.findById(req.body.cardId)
   // get user
-  var user = await User.find({username: req.body.username})
+  var user = await User.findOne({username: req.body.username})
   if(!card) {
     // card not found
     res.status(500).send("err: card not found")
@@ -70,22 +70,24 @@ router.post('/collection/add', async(req, res) => {
     res.status(500).send("err: user not found")
   } else {
     // add card to users collection
-    await User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       {username: req.body.username},
-      {$push: {cards: card}},
-      {new: true, upsert: true }
-    )
+      {$push: {cards: card}}
+    ).exec()
+
+    user = updatedUser.toObject()
     
-    var user = await User.findOne({username: req.body.username})
     //console.log("Card collection",  user.cardCollection)
     //console.log(user["cardCollection"])
-    user = user.toObject()
-    console.log(user.cardCollection)
-    res.status(200).send(user)
+    //console.log(user.cardCollection.length)
+    //user = updatedUser.toObject()
+    //console.log(user)
+    console.log(user.cards.length)
+    res.status(200).send("Card Added")
   }
 })
 
-// sell card when pack is opened
+// sell card for coins
 router.post('/card/sell', async(req, res) => {
   console.log(req.body.username)
   console.log(req.body.cardId)

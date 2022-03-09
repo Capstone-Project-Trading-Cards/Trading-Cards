@@ -9,6 +9,7 @@ const UserCollection = require("../models/UserCollection");
 const User = require("../models/User");
 const Card = require("../models/Card").Card;
 const Pack = require("../models/Pack")
+const PackOpened = require("../models/PackOpened")
 
 // Sets up where to store POST images
 const storage = multer.diskStorage({
@@ -64,6 +65,7 @@ router.post("/addPack", async (req, res) => {
 
 router.get("/:packid/open/:cardnum", async (req, res) => {
   try {
+    // get username :(
     // get pack and card numbers
     const pack = await Pack.findById(req.params.packid)
     const numCards = req.params.cardnum
@@ -77,9 +79,13 @@ router.get("/:packid/open/:cardnum", async (req, res) => {
         var random = Math.floor(Math.random() * cardLength)
         cardsToSend.push(await Card.findOne().skip(random))
       }
-      // can add cards to user collection here
+      // create packopened and save to db
+      const packOpened = new PackOpened({
+        packname: pack.name,
+        dateopened: new Date()
+      })
+      await packOpened.save()
 
-      // send cards to ui
       res.send(cardsToSend)
     } else {
       res.status(500).send({"err": `Not enough cards in pack to open ${numCards} cards`})
@@ -89,108 +95,6 @@ router.get("/:packid/open/:cardnum", async (req, res) => {
   }
 })
 
-/*
-const generateNewCards = (packId) => {
-  // TODO: Get random 6 cards from pack, use the same data to duplicate the card that is already in the pack
-  // TODO: assign same info but the owner so we can have a duplicate cards with new owners
-  // TODO: fix the randomize logic what if there is high number id cards in the pack?
-  // * get 6 random numbers to use them to get random cards from the pack
-  const randomNums = [];
-  for (var i = 0; i < 6; i++) {
-    const numberOfItemsInPack = Math.floor(Math.random() * pack.items.length());
-    randomNums.push(numberOfItemsInPack);
-  }
-  // * getting random cards from the pack
-  // * items are joint table of the Card Model
-  // * card ids needs to start from 1 in this case
-  const unpackedCards = [];
-  for (var i = 0; i < 6; i++) {
-    const getCard = Pack.findById(packId).select({
-      items: {
-        $elemMatch: { _id: randomNums[i] },
-      },
-    });
-    // * creating the card copy
-    const newCard = new Card({
-      name: getCard.name,
-      rating: getCard.rating,
-      // category that it belongs to could be more than one
-      category: getCard.category,
-      // rarity
-      tier: getCard.tier,
-      price: getCard.price,
-      speed: getCard.speed,
-      power: getCard.power,
-      vision: getCard.vision,
-      passing: getCard.passing,
-      defending: getCard.defending,
-      stamina: getCard.stamina,
-      owner: userId,
-      nationality: getCard.nationality,
-      team: getCard.team,
-      // when user puts the cards up for trade switch to true, it is false as default
-      package: getCard.package,
-    });
-    const savedCard = newCard.save();
-    // * pushing it to card stack and returning
-    unpackedCards.push(savedCard);
-    return unpackedCards;
-  }
-};
-*/
-
-const drawCards = async (numberOfCards, pack, cardRange, userId) => {
-  const drawnCards = [];
-  var oneRandomCard;
-  // number of cards will be drawn
-  for (let i = 0; i < numberOfCards; i++) {
-    // get random numbers from 0 to 19
-    const randomNumber = Math.floor(Math.random() * cardRange);
-    // get random cards from id of 0 to 19
-    // we could also use different models to create more chances and variations
-    // for lowtierpack we can draw 5 cards from lowtierpack and 1 from midtierpack
-    // for midtierpack we can draw 4 cards from midterpack and 2 from hightier
-    // for hightier all cards are drawn from hightierpack model
-    if (pack === LowTierPack && i > 4) {
-      oneRandomCard = await MidTierPack.findOne({
-        items: { $elemMatch: { _id: randomNumber } },
-      });
-    } else if (pack === MidTierPack && i > 3) {
-      oneRandomCard = await HighTierPack.findOne({
-        items: { $elemMatch: { _id: randomNumber } },
-      });
-    } else {
-      oneRandomCard = await pack.findOne({
-        items: { $elemMatch: { _id: randomNumber } },
-      });
-    }
-    // create card duplicates
-    const newCard = new Card({
-      name: oneRandomCard.name,
-      rating: oneRandomCard.rating,
-      // category that it belongs to could be more than one
-      category: oneRandomCard.category,
-      // rarity
-      tier: oneRandomCard.tier,
-      price: oneRandomCard.price,
-      speed: oneRandomCard.speed,
-      power: oneRandomCard.power,
-      vision: oneRandomCard.vision,
-      passing: oneRandomCard.passing,
-      defending: oneRandomCard.defending,
-      stamina: oneRandomCard.stamina,
-      // assigning that to the user who is openning the package
-      owner: userId,
-      nationality: oneRandomCard.nationality,
-      team: oneRandomCard.team,
-      // when user puts the cards up for trade switch to true, it is false as default
-      package: oneRandomCard.package,
-    });
-    const savedCard = newCard.save();
-    drawnCards.push(savedCard);
-  }
-  return drawnCards;
-};
 
 router.post("/showcase/:packid", async (req, res) => {
   const uiPackId = req.params.packid;
