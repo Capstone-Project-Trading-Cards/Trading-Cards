@@ -14,6 +14,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AddIcon from "@mui/icons-material/Add";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -112,10 +113,19 @@ export default function Navbar(props) {
               <li className="m-1">
                 <Button
                   sx={{ backgroundColor: "#1565C0" }}
-                  href="/buyCoins"
+                  href="/dashboard"
                   variant="contained"
                 >
-                  Coins
+                  Dashboard
+                </Button>
+              </li>
+              <li className="m-1">
+                <Button
+                  sx={{ backgroundColor: "#1565C0" }}
+                  href="/cards"
+                  variant="contained"
+                >
+                  Cards
                 </Button>
               </li>
               <li className="m-1">
@@ -149,15 +159,6 @@ export default function Navbar(props) {
         <div>
           {props.isLoggedIn ? (
             <div>
-              {props.user.isAdmin ? (
-                <div>
-                  <Link className="btn btn-outline-success" to="/addCard">
-                    Add Card
-                  </Link>
-                </div>
-              ) : (
-                ""
-              )}
               <Box
                 sx={{
                   display: "flex",
@@ -180,27 +181,52 @@ export default function Navbar(props) {
                   open={open}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleProfile}>
-                    <PersonIcon />
-                    Profile
-                  </MenuItem>
-                  <MenuItem onClick={handleClose} disableRipple>
-                    <CollectionsIcon />
-                    My Collection
-                  </MenuItem>
-                  <MenuItem onClick={handleClose} disableRipple>
-                    <EditIcon />
-                    Trade Requests 1
-                  </MenuItem>
-                  <Divider sx={{ my: 0.5 }} />
-                  <MenuItem disableRipple onClick={handleGetMoreCoins}>
-                    <MonetizationOnIcon />
-                    Get More Coins
-                  </MenuItem>
-                  <MenuItem onClick={handleLogout} disableRipple>
-                    <LogoutIcon />
-                    Logout
-                  </MenuItem>
+                  {props.user.isAdmin ? (
+                    <>
+                      <MenuItem>Admin Dashboard</MenuItem>
+                      <MenuItem onClick={() => navigate("/addCard")}>
+                        <AddIcon />
+                        Add Card
+                      </MenuItem>
+                      <MenuItem onClick={() => navigate("/addPack")}>
+                        <AddIcon />
+                        Add Pack
+                      </MenuItem>
+                      <Divider sx={{ my: 0.5 }} />
+                      <MenuItem onClick={handleProfile}>
+                        <PersonIcon />
+                        Profile
+                      </MenuItem>
+                      <MenuItem onClick={handleLogout} disableRipple>
+                        <LogoutIcon />
+                        Logout
+                      </MenuItem>
+                    </>
+                  ) : (
+                    <>
+                      <MenuItem onClick={handleProfile}>
+                        <PersonIcon />
+                        Profile
+                      </MenuItem>
+                      <MenuItem onClick={handleClose} disableRipple>
+                        <CollectionsIcon />
+                        My Collection
+                      </MenuItem>
+                      <MenuItem onClick={handleClose} disableRipple>
+                        <EditIcon />
+                        Trade Requests 1
+                      </MenuItem>
+                      <Divider sx={{ my: 0.5 }} />
+                      <MenuItem disableRipple onClick={handleGetMoreCoins}>
+                        <MonetizationOnIcon />
+                        Get More Coins
+                      </MenuItem>
+                      <MenuItem onClick={handleLogout} disableRipple>
+                        <LogoutIcon />
+                        Logout
+                      </MenuItem>
+                    </>
+                  )}
                 </StyledMenu>
                 <Typography variant="body1" m={1} sx={{ color: "yellow" }}>
                   <MonetizationOnIcon />

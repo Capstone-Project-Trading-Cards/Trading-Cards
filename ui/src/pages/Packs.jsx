@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Box, Button, Typography } from "@mui/material";
-import Forwards from "../images/pack-background3.png";
+import Bronzes from "../images/Bronze-Card.png";
+import Silvers from "../images/Silver-Card.png";
 import Golds from "../images/pack-background4.png";
 import Diamonds from "../images/pack-background2.png";
 import PackLogo4 from "../images/soccer-player-cards/rare/De Bruyne.png";
@@ -149,13 +150,13 @@ export default function Packs() {
                   </Typography>
                   <img
                     src={
-                      pack.name === "Forwards Pack"
-                        ? Forwards
-                        : pack.name === "Golds Pack"
+                      pack.packRarity === 1
+                        ? Bronzes
+                        : pack.packRarity === 2
+                        ? Silvers
+                        : pack.packRarity === 3
                         ? Golds
-                        : pack.name === "Diamonds Pack"
-                        ? Diamonds
-                        : PackLogo4
+                        : Diamonds
                     }
                     sx={{ position: "relative" }}
                     alt="Forwards Pack"

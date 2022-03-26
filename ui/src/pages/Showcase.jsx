@@ -81,9 +81,8 @@ export default function Showcase() {
         />
         <Box sx={{ position: "relative" }} mb={2}>
           <Typography>Page Content Goes Here...</Typography>
-
           {cardData.map((card) => (
-            <img src={card.image} alt={card.name} />
+            <Typography color="white">{card.name}</Typography>
           ))}
         </Box>
         <Footer />

@@ -4,7 +4,8 @@ import { makeStyles } from "@mui/styles";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import Navbar from "../components/Navbar";
-import Forwards from "../images/pack-background3.png";
+import Bronzes from "../images/Bronze-Card.png";
+import Silvers from "../images/Silver-Card.png";
 import Golds from "../images/pack-background4.png";
 import Diamonds from "../images/pack-background2.png";
 import PackLogo4 from "../images/fifa-background2.png";
@@ -134,13 +135,13 @@ export default function Pack() {
               <img
                 className={classes.cardHover}
                 src={
-                  pack.name === "Forwards Pack"
-                    ? Forwards
-                    : pack.name === "Golds Pack"
+                  pack.packRarity === 1
+                    ? Bronzes
+                    : pack.packRarity === 2
+                    ? Silvers
+                    : pack.packRarity === 3
                     ? Golds
-                    : pack.name === "Diamonds Pack"
-                    ? Diamonds
-                    : PackLogo4
+                    : Diamonds
                 }
                 sx={{ position: "relative" }}
                 alt="Forwards Pack"
@@ -174,7 +175,7 @@ export default function Pack() {
                   : " High"}
               </Typography>
               <Typography mt={1} mb={4} variant="h6" color="white">
-                Number of Cards: {pack.numberOfCards}
+                Number of Cards: {pack.numberOfCards ? pack.numberOfCards : "5"}
               </Typography>
               <Button variant="contained" value={buttonValue} type="submit">
                 Open the {pack.name}

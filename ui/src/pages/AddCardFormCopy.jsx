@@ -23,30 +23,46 @@ import StorageIcon from "@mui/icons-material/Storage";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 
-export default function AddCardForm() {
+export default function AddCardFormCopy() {
+  const [cardData, setCardData] = useState([]);
+  const [numberOfCards, setNumberOfCards] = useState(0);
   const [chooseCategory, setChooseCategory] = useState([]);
   const [chooseTier, setChooseTier] = useState(null);
   const [choosePack, setChoosePack] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState();
   const [packs, setPacks] = useState([]);
-  const [imageFileName, setImageFileName] = useState("");
-  const [error, setError] = useState(false);
+  const [imageFile, setImageFile] = useState("");
 
   const onChangeImageFile = (e) => {
-    setImageFileName(e.target.files[0]);
+    setImageFile(e.target.files[0]);
+  };
+
+  const handleAddImage = (e) => {
+    e.preventDefault();
+    console.log(imageFile);
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    axios
+      .post(
+        `http://localhost:5000/api/cards/addImageToCard/${cardData.length}`,
+        formData
+      )
+      .then((res) => res.data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   const [formInformation, setFormInformation] = useState({
-    firstname: "",
+    id: 0,
+    name: "",
     lastname: "",
-    category: "",
+    rating: "",
     // category that it belongs to could be more than one
+    category: "",
     // rarity
     tier: "",
     price: "",
-    image: "",
-    rating: "",
     speed: "",
     power: "",
     vision: "",
@@ -56,12 +72,23 @@ export default function AddCardForm() {
     nationality: "",
     team: "",
     // when user puts the cards up for trade switch to true, it is false as default
-    pack: "",
+    package: "",
   });
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    // get cards
+    axios
+      .get("http://localhost:5000/api/cards/")
+      .then((res) => res.data)
+      .then((res) => {
+        setCardData(res);
+        console.log(res);
+        setFormInformation({ ...formInformation, id: cardData?.length + 1 });
+      })
+      .catch((err) => console.log(err));
+
     console.log(formInformation);
     // get user
     axios
@@ -94,17 +121,15 @@ export default function AddCardForm() {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formInformation);
+    setFormInformation({ ...formInformation, id: cardData?.length + 1 });
     axios
       .post("http://localhost:5000/api/cards/add", formInformation)
       .then((res) => res.data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        setError(true);
-      });
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
   const categories = [
     "Fifa",
@@ -116,6 +141,20 @@ export default function AddCardForm() {
   ];
 
   const tiers = ["Diamond", "Platinium", "Gold", "Silver", "Bronze"];
+
+  const handleCardId = (e) => {
+    e.preventDefault();
+    // get card count
+    axios
+      .get("http://localhost:5000/api/cards/getCardCount")
+      .then((res) => res.data)
+      .then((res) => {
+        setNumberOfCards(res);
+        setFormInformation({ ...formInformation, id: res });
+        console.log("Number of cards " + res);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Box
@@ -130,15 +169,13 @@ export default function AddCardForm() {
       <Typography mt={4} variant="h4" align="center">
         Add Card
       </Typography>
+      <Typography mt={2} textAlign="center">
+        Add Card Id: {cardData?.length + 1}
+      </Typography>
       <Grid mt={4} sx={{ display: "flex", justifyContent: "center" }}>
         <Grid container justifyContent="center" sx={{ width: "70%" }}>
           <Grid item xs={10} sx={{ display: "flex", justifyContent: "center" }}>
             <Box>
-              {error ? (
-                <Typography variant="h6">Couldn't add the card</Typography>
-              ) : (
-                ""
-              )}
               <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <FormControl
                   sx={{
@@ -147,11 +184,11 @@ export default function AddCardForm() {
                   }}
                 >
                   <TextField
-                    value={formInformation.firstname}
+                    value={formInformation.name}
                     onChange={(e) =>
                       setFormInformation({
                         ...formInformation,
-                        firstname: e.target.value,
+                        name: e.target.value,
                       })
                     }
                     label="First Name"
@@ -359,20 +396,25 @@ export default function AddCardForm() {
                 <FormControl sx={{ m: 1, width: "48%" }}>
                   <InputLabel>Category</InputLabel>
                   <Select
-                    value={formInformation.category}
+                    multiple
+                    value={chooseCategory}
+                    sx={{ backgroundColor: "white" }}
                     onChange={(e) => {
+                      setChooseCategory(e.target.value);
                       setFormInformation({
                         ...formInformation,
-                        category: e.target.value,
+                        category: chooseCategory,
                       });
                     }}
-                    sx={{ backgroundColor: "white" }}
                     input={<OutlinedInput label="Category" />}
+                    renderValue={(selected) => selected.join(", ")}
                     fullWidth
-                    defaultValue={categories[0]}
                   >
-                    {categories?.map((category) => (
-                      <MenuItem value={category}>
+                    {categories.map((category) => (
+                      <MenuItem key={category} value={category}>
+                        <Checkbox
+                          checked={chooseCategory.indexOf(category) > -1}
+                        />
                         <ListItemText primary={category} />
                       </MenuItem>
                     ))}
@@ -381,19 +423,19 @@ export default function AddCardForm() {
                 <FormControl sx={{ m: 1, width: "48%" }}>
                   <InputLabel>Tier</InputLabel>
                   <Select
+                    label="tier"
+                    sx={{ backgroundColor: "white" }}
                     value={formInformation.tier}
                     onChange={(e) => {
+                      setChooseTier(e.target.value);
                       setFormInformation({
                         ...formInformation,
                         tier: e.target.value,
                       });
                     }}
-                    sx={{ backgroundColor: "white" }}
-                    input={<OutlinedInput label="Pack" />}
                     fullWidth
-                    defaultValue={tiers[0]}
                   >
-                    {tiers?.map((tier) => (
+                    {tiers.map((tier) => (
                       <MenuItem key={tier} value={tier}>
                         <ListItemText primary={tier} />
                       </MenuItem>
@@ -421,17 +463,16 @@ export default function AddCardForm() {
                 <FormControl sx={{ m: 1, width: "48%" }}>
                   <InputLabel>Choose Pack</InputLabel>
                   <Select
-                    value={formInformation.pack}
+                    value={formInformation.package}
                     onChange={(e) => {
                       setFormInformation({
                         ...formInformation,
-                        pack: e.target.value,
+                        package: e.target.value,
                       });
                     }}
                     sx={{ backgroundColor: "white" }}
                     input={<OutlinedInput label="Pack" />}
                     fullWidth
-                    defaultValue={packs[0]}
                   >
                     {packs?.map((pack) => (
                       <MenuItem key={pack._id} value={pack.name}>
@@ -448,6 +489,27 @@ export default function AddCardForm() {
                     type="submit"
                   >
                     Add Card to the Database
+                  </Button>
+                </Stack>
+              </form>
+              <form onSubmit={handleAddImage} encType="multipart/form-data">
+                <Stack alignItems="center" sx={{ m: 2 }}>
+                  <InputLabel>Upload the Card Image</InputLabel>
+                  <label htmlFor="contained-button-file">Upload Image</label>
+                  <input
+                    type="file"
+                    name="cardImage"
+                    onChange={onChangeImageFile}
+                  />
+                </Stack>
+                <Stack alignItems="center" m={4}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    endIcon={<StorageIcon />}
+                    type="submit"
+                  >
+                    Add Image to the Card
                   </Button>
                 </Stack>
               </form>

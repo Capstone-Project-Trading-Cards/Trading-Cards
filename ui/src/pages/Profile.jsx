@@ -96,7 +96,7 @@ export default function Profile() {
             position: "fixed",
             left: 0,
             top: 0,
-            width: "99.1vw",
+            width: "99.9vw",
             height: "auto",
             zIndex: 0,
             margin: 0,
@@ -116,7 +116,7 @@ export default function Profile() {
                   mt={2}
                   sx={{ display: "flex", justifyContent: "flex-start" }}
                 >
-                  <Button size="small" variant="contained">
+                  <Button href="editProfile" size="small" variant="contained">
                     Edit Profile
                   </Button>
                 </Box>

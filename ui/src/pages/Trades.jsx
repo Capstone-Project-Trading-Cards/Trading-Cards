@@ -9,6 +9,7 @@ import {
   CardHeader,
   Chip,
   Grid,
+  Modal,
   Stack,
   TextField,
   Typography,
@@ -20,34 +21,28 @@ import Silvers from "../images/Silver-Card.png";
 import Golds from "../images/pack-background4.png";
 import Platinum from "../images/Platinium-Card.png";
 import Diamonds from "../images/pack-background2.png";
+import { makeStyles } from "@mui/styles";
 
-export default function AllCards() {
-  const [cardData, setCardData] = useState([{}]);
+export default function Trades() {
+  const [cardData, setCardData] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState();
-  const [buttonClicked, setButtonClicked] = useState(false);
+  const [postRequest, setPostRequest] = useState(false);
 
-  const handleDelete = (cardId) => {
+  const handleRemoveFromTradeList = (cardId) => {
     axios
-      .delete(`http://localhost:5000/api/cards/${cardId}`)
+      .post(`http://localhost:5000/api/cards/removeFromTrade`, {
+        cardId: cardId,
+      })
       .then((res) => res.data)
       .then((res) => {
         console.log(res);
-        setButtonClicked(!buttonClicked);
+        setPostRequest(!postRequest);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    // get cards
-    axios
-      .get("http://localhost:5000/api/cards/")
-      .then((res) => res.data)
-      .then((res) => {
-        setCardData(res);
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
     // get user
     axios
       .get("/api/getUsername", {
@@ -65,7 +60,17 @@ export default function AllCards() {
         }
       })
       .catch((err) => console.log(err));
-  }, [buttonClicked]);
+
+    // get cards
+    axios
+      .get("http://localhost:5000/api/cards/trades")
+      .then((res) => res.data)
+      .then((res) => {
+        setCardData(res);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }, [postRequest]);
   return (
     <Box
       sx={{
@@ -97,7 +102,7 @@ export default function AllCards() {
         />
         <Box sx={{ position: "relative" }} mb={2}>
           <Typography variant="h3" mt={4} color="white" textAlign="center">
-            Card Collection
+            Trade List
           </Typography>
           <Box sx={{ display: "flex", justifyContent: "center" }} mt={6}>
             <TextField
@@ -118,41 +123,42 @@ export default function AllCards() {
               <Grid key={card._id} item xs={12} sm={6} md={4} lg={3}>
                 <Box>
                   <Card>
-                    <Box
-                      sx={{ display: "flex", justifyContent: "space-between" }}
-                    >
+                    {user?._id === card.owner ? (
+                      <>
+                        <CardHeader
+                          title={`${card.firstname} ${card.lastname}`}
+                          subheader={`Price: ${card.price} - Rating ${card.rating}`}
+                        ></CardHeader>
+                        <Chip
+                          sx={{
+                            display: "flex",
+                            backgroundColor: "green",
+                            color: "white",
+                          }}
+                          label="Owned by You"
+                        />
+                      </>
+                    ) : (
                       <CardHeader
                         title={`${card.firstname} ${card.lastname}`}
-                        subheader={`Price: ${card.price} - Rating ${card.rating}`}
+                        subheader={`Price: ${card.price} - Rating ${card.rating} - Owner ${card.owner}`}
                       ></CardHeader>
-                      <Box m={4}>
-                        {card.owner === user?._id ? (
-                          <Chip
-                            label="Owned"
-                            sx={{
-                              display: "flex",
-                              backgroundColor: "green",
-                              color: "white",
-                            }}
-                          />
-                        ) : (
-                          ""
-                        )}
-                      </Box>
-                    </Box>
+                    )}
                     <CardContent>
                       <Stack>
-                        <Button href={`cards/${card._id}`} variant="contained">
+                        <Button href={`trades/${card._id}`} variant="contained">
                           Go to Card
                         </Button>
-                        {user?.isAdmin ? (
+                        {user?.isAdmin || user?._id === card.owner ? (
                           <Box mt={2}>
                             <Button
                               color="secondary"
-                              onClick={() => handleDelete(card._id)}
+                              onClick={() =>
+                                handleRemoveFromTradeList(card._id)
+                              }
                               variant="contained"
                             >
-                              Delete Card
+                              Remove Card From TradeList
                             </Button>
                           </Box>
                         ) : (
