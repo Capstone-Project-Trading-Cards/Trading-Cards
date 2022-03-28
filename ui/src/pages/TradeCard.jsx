@@ -10,6 +10,7 @@ import {
   Modal,
   OutlinedInput,
   Select,
+  TextField,
   Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -67,7 +68,23 @@ export default function TradeCard() {
       .catch((err) => console.log(err));
   };
 
-  const handleSendTradeOffer = () => {};
+  const handleSendTradeOffer = (chosenCard) => {
+    setChosenCard(chosenCard);
+    console.log(`Card Data ${cardData} offered card ${chosenCard}`);
+    axios
+      .post("http://localhost:5000/api/trades/offer", {
+        offerFrom: user._id,
+        offerTo: cardData.owner,
+        offeredCard: chosenCard,
+        wantedCard: cardData,
+      })
+      .then((res) => res.data)
+      .then((res) => {
+        console.log(res);
+        navigate("/tradeOffers");
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleOpen = (e) => {
     e.preventDefault();
@@ -116,7 +133,16 @@ export default function TradeCard() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    axios
+      .get(`http://localhost:5000/api/cards/userCollection/${user?._id}`)
+      .then((res) => res.data)
+      .then((res) => {
+        setOwnedCards(res);
+        console.log(res);
+        console.log("fetch card stuff");
+      })
+      .catch((err) => console.log(err));
+  }, [ownedCards.length, user.username]);
 
   const handleRemoveFromTradeList = (cardId) => {
     axios
@@ -124,20 +150,6 @@ export default function TradeCard() {
       .then((res) => res.data)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
-  };
-
-  const handleBuy = () => {
-    axios
-      .post(
-        `http://localhost:5000/api/cards/${
-          location.pathname.split("/")[[2]]
-        }/buy/${user._id}`
-      )
-      .then((res) => res.data)
-      .then((res) => {
-        console.log(res);
-        navigate("/cards");
-      });
   };
 
   return (
@@ -184,27 +196,42 @@ export default function TradeCard() {
               <Typography textAlign="center" variant="h4" component="h2">
                 Send offer
               </Typography>
+              <Typography variant="h6" textAlign="center" mt={1}>
+                {cardData.firstname} {cardData.lastname}
+              </Typography>
+              <Typography textAlign="center" mt={1}>
+                Rating: {cardData.rating}
+              </Typography>
+              <Typography textAlign="center" mt={1}>
+                Value: {cardData.price}
+              </Typography>
               {ownedCards.length > 0 ? (
                 <>
-                  <Typography variant="body1" mt={1} textAlign="center">
+                  <Typography variant="body1" mt={1} mb={2} textAlign="center">
                     Choose the Card that you want to trade
                   </Typography>
-                  <FormControl sx={{ m: 1, width: "48%" }}>
-                    <InputLabel>Category</InputLabel>
+                  <FormControl
+                    sx={{
+                      m: 3,
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <InputLabel>Owned Cards</InputLabel>
                     <Select
                       value={chosenCard}
                       onChange={(e) => setChosenCard(e.target.value)}
                       sx={{ backgroundColor: "white" }}
                       input={<OutlinedInput label="Category" />}
                       fullWidth
-                      defaultValue={ownedCards[0].lastname}
+                      defaultValue={ownedCards[0]}
                     >
                       {ownedCards?.map((ownedCard) => (
-                        <MenuItem
-                          key={ownedCard._id}
-                          value={ownedCard.lastname}
-                        >
-                          <ListItemText primary={ownedCard.lastname} />
+                        <MenuItem key={ownedCard._id} value={ownedCard}>
+                          <ListItemText
+                            primary={`${ownedCard.firstname} ${ownedCard.lastname}`}
+                            secondary={`Rating: ${ownedCard.rating} Value: ${ownedCard.price}`}
+                          />
                         </MenuItem>
                       ))}
                     </Select>
@@ -213,9 +240,6 @@ export default function TradeCard() {
               ) : (
                 ""
               )}
-              <Typography variant="body1" mt={1} textAlign="center">
-                Or Buy it for listed price
-              </Typography>
               <Box
                 mt={4}
                 sx={{ display: "flex", justifyContent: "space-around" }}
@@ -225,13 +249,6 @@ export default function TradeCard() {
                   variant="contained"
                 >
                   Send the offer
-                </Button>
-                <Button
-                  color="warning"
-                  onClick={() => handleBuy}
-                  variant="contained"
-                >
-                  Buy Now
                 </Button>
                 <Button
                   onClick={handleClose}
@@ -260,7 +277,7 @@ export default function TradeCard() {
               }}
             >
               <Typography variant="h5" color="white" textAlign="center">
-                {cardData.price} TCC
+                Value {cardData.price} TCC
               </Typography>
               {user?._id === cardData.owner ? (
                 <Typography variant="h5" color="white" textAlign="center">
@@ -345,20 +362,17 @@ export default function TradeCard() {
                       onClick={handleOpen}
                       variant="contained"
                     >
-                      Trade with one of my cards
+                      Send a Trade Offer
                     </Button>
                   ) : (
                     ""
                   )}
-                  <Button onClick={handleOpen} variant="contained">
-                    Buy it for {cardData.price} TCC
-                  </Button>
                 </>
               ) : (
                 <Button
                   color="warning"
                   mt={2}
-                  onClick={handleRemoveFromTradeList(cardData._id)}
+                  onClick={() => handleRemoveFromTradeList(cardData._id)}
                   variant="contained"
                 >
                   Remove from Trade List

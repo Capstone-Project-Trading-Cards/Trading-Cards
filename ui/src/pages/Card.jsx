@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Grid, Modal, Typography } from "@mui/material";
+import { Box, Button, Grid, Modal, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import axios from "axios";
 import { useLocation, useNavigate, useParams } from "react-router";
 import Navbar from "../components/Navbar";
 import Forwards from "../images/pack-background3.png";
-import Golds from "../images/pack-background4.png";
-import Diamonds from "../images/pack-background2.png";
 import PackLogo4 from "../images/fifa-background2.png";
 import sampleCard1 from "../images/soccer-player-cards/rare/Haaland.png";
 import sampleCard2 from "../images/soccer-player-cards/rare/Kylian Mbappe.png";
 import sampleCard3 from "../images/soccer-player-cards/rare/Lewandowski.png";
 import Bronzes from "../images/Bronze-Card.png";
 import Silvers from "../images/Silver-Card.png";
+import Golds from "../images/pack-background4.png";
 import Platinium from "../images/Platinium-Card.png";
+import Diamonds from "../images/pack-background2.png";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
 import Footer from "../components/Footer";
 import Carousel from "react-material-ui-carousel";
@@ -41,6 +41,8 @@ export default function Card() {
   const [cardData, setCardData] = useState({});
   const [buttonValue, setButtonValue] = useState("");
   const [open, setOpen] = React.useState(false);
+  const [openTradeIt, setOpenTradeIt] = useState(false);
+  const [listPrice, setListPrice] = useState(0);
 
   const handleDelete = (cardId) => {
     axios
@@ -48,7 +50,7 @@ export default function Card() {
       .then((res) => res.data)
       .then((res) => {
         console.log(res);
-        navigate("/cards");
+        navigate("/myCards");
       })
       .catch((err) => console.log(err));
   };
@@ -112,8 +114,44 @@ export default function Card() {
       .then((res) => res.data)
       .then((res) => {
         console.log(res);
-        navigate("/cards");
+        navigate("/myCards");
       });
+  };
+
+  const handleSell = () => {
+    axios
+      .post("http://localhost:5000/api/cards/sell", {
+        cardId: cardData._id,
+        userId: user._id,
+      })
+      .then((res) => res.data)
+      .then((res) => {
+        console.log(res);
+        navigate("/myCards");
+      });
+  };
+
+  const handleOpenTradeIt = () => {
+    setOpenTradeIt(true);
+  };
+
+  const handleCloseTradeIt = () => {
+    setOpenTradeIt(false);
+  };
+
+  const handleTradeNow = () => {
+    axios
+      .post("http://localhost:5000/api/cards/putCardForTrade", {
+        cardId: cardData._id,
+        price: listPrice,
+      })
+      .then((res) => res.data)
+      .then((res) => {
+        console.log(res);
+        navigate("/myCards");
+      })
+      .catch((err) => console.log(err))
+      .finally(() => handleCloseTradeIt());
   };
 
   return (
@@ -155,18 +193,74 @@ export default function Card() {
             justifyContent: "center",
           }}
         >
-          <Modal open={open} onClose={handleClose}>
+          <Modal open={openTradeIt} onClose={handleCloseTradeIt}>
             <Box className={classes.modal}>
               <Typography textAlign="center" variant="h4" component="h2">
-                Buy the Card
+                Trade your Card
+              </Typography>
+              <Typography variant="h5" mt={1} textAlign="center">
+                {cardData?.firstname} {cardData?.lastname}
+              </Typography>
+              <Typography variant="h6" mt={1} textAlign="center">
+                Rating: {cardData?.rating}
+              </Typography>
+              <Typography variant="h6" mt={1} textAlign="center">
+                Sell Now Price: {cardData?.price}
               </Typography>
               <Typography variant="body1" mt={1} textAlign="center">
-                Confirm your purchase
+                Set a price for your card
               </Typography>
-              <Typography variant="h6" mt={2} textAlign="center">
-                Buy it for {cardData.price} TCC
-                {" ?"}
+
+              <Box mt={2} sx={{ display: "flex", justifyContent: "center" }}>
+                <TextField
+                  value={listPrice}
+                  onChange={(e) => setListPrice(e.target.value)}
+                  label="TCC"
+                />
+              </Box>
+              <Box
+                mt={4}
+                sx={{ display: "flex", justifyContent: "space-around" }}
+              >
+                <Button onClick={handleTradeNow} variant="contained">
+                  List on Trade Market
+                </Button>
+                <Button
+                  onClick={handleCloseTradeIt}
+                  variant="contained"
+                  color="inherit"
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </Box>
+          </Modal>
+
+          <Modal open={open} onClose={handleClose}>
+            <Box className={classes.modal}>
+              {cardData.owner === user._id ? (
+                <Typography textAlign="center" variant="h4" component="h2">
+                  Sell the Card
+                </Typography>
+              ) : (
+                <Typography textAlign="center" variant="h4" component="h2">
+                  Buy the Card
+                </Typography>
+              )}
+              <Typography variant="body1" mt={1} textAlign="center">
+                Confirm your action
               </Typography>
+              {cardData.owner === user._id ? (
+                <Typography variant="h6" mt={2} textAlign="center">
+                  Sell it for {cardData.price} TCC
+                  {" ?"}
+                </Typography>
+              ) : (
+                <Typography variant="h6" mt={2} textAlign="center">
+                  Buy it for {cardData.price} TCC
+                  {" ?"}
+                </Typography>
+              )}
               <Box
                 mt={4}
                 sx={{ display: "flex", justifyContent: "space-around" }}
@@ -175,18 +269,15 @@ export default function Card() {
                   <>
                     {" "}
                     <Button
-                      color="danger"
-                      onClick={() => handleBuy()}
+                      color="warning"
+                      onClick={handleSell}
                       variant="contained"
                     >
-                      Sell Now
-                    </Button>
-                    <Button variant="contained" color="warning">
-                      Trade Now
+                      Sell It
                     </Button>
                   </>
                 ) : (
-                  <Button onClick={() => handleBuy()} variant="contained">
+                  <Button onClick={handleBuy} variant="contained">
                     Buy
                   </Button>
                 )}
@@ -285,9 +376,20 @@ export default function Card() {
                 Stamina: {cardData.stamina}
               </Typography>
               {user._id === cardData.owner ? (
-                <Button onClick={handleOpen} variant="contained">
-                  Sell now for {cardData.price} TCC
-                </Button>
+                <Box>
+                  <Box mb={2}>
+                    <Button onClick={handleOpen} variant="contained">
+                      Sell now for {cardData.price} TCC
+                    </Button>
+                  </Box>
+                  <Button
+                    onClick={handleOpenTradeIt}
+                    variant="contained"
+                    color="warning"
+                  >
+                    List on Trade Market
+                  </Button>
+                </Box>
               ) : (
                 <Button onClick={handleOpen} variant="contained">
                   Buy it for {cardData.price} TCC

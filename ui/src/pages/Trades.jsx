@@ -102,7 +102,7 @@ export default function Trades() {
         />
         <Box sx={{ position: "relative" }} mb={2}>
           <Typography variant="h3" mt={4} color="white" textAlign="center">
-            Trade List
+            Trade Market
           </Typography>
           <Box sx={{ display: "flex", justifyContent: "center" }} mt={6}>
             <TextField
@@ -158,7 +158,7 @@ export default function Trades() {
                               }
                               variant="contained"
                             >
-                              Remove Card From TradeList
+                              Remove Card From Trade Market
                             </Button>
                           </Box>
                         ) : (

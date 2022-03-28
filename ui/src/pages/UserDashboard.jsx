@@ -10,6 +10,7 @@ import BuyCoinsImage from "../images/Coin_Bag.png";
 import OpenPacksImage from "../images/pack-background4.png";
 import MyProfileImage from "../images/avatar.png";
 import AddFunds from "../images/add-funds.png";
+import Market from "../images/market.png";
 
 import Footer from "../components/Footer";
 
@@ -75,7 +76,7 @@ export default function UserDashboard() {
             position: "fixed",
             left: 0,
             top: 0,
-            width: "100vw",
+            width: "100%",
             height: "auto",
             zIndex: 0,
             margin: 0,
@@ -98,7 +99,6 @@ export default function UserDashboard() {
             </Typography>
           </Box>
           <Grid
-            md={12}
             mt={6}
             sx={{
               display: "flex",
@@ -122,6 +122,18 @@ export default function UserDashboard() {
             <Box sx={{ padding: "20px" }}>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Button href="/trades" variant="contained">
+                  <Typography textAlign="center" variant="h5">
+                    Trade Market
+                  </Typography>
+                </Button>
+                <Box mt={2}>
+                  <img src={Market} width="200px" />
+                </Box>
+              </Box>
+            </Box>
+            <Box sx={{ padding: "20px" }}>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Button href="/tradeOffers" variant="contained">
                   <Typography textAlign="center" variant="h5">
                     Trade Offers
                   </Typography>

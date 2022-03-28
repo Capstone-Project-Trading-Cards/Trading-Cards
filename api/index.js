@@ -10,7 +10,8 @@ const cardsRoute = require("./routes/cards");
 const userRoute = require("./routes/user");
 const auth = require("./routes/auth");
 const packRoute = require("./routes/pack");
-const adminRoute = require('./routes/admin')
+const adminRoute = require("./routes/admin");
+const tradesRoute = require("./routes/trades");
 
 // server setup
 const app = express();
@@ -33,7 +34,8 @@ app.use("/api/cards", cardsRoute);
 app.use("/api/user", userRoute);
 app.use("/", auth);
 app.use("/api/packs", packRoute);
-app.use("/api/admin", adminRoute)
+app.use("/api/admin", adminRoute);
+app.use("/api/trades", tradesRoute);
 
 app.use("/", auth);
 // creating server

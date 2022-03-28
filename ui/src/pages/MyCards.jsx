@@ -88,12 +88,11 @@ export default function MyCards() {
       });
   };
 
-  const handleTradeNow = (card, price) => {
+  const handleTradeNow = (card) => {
     setSelectedCard(card);
     axios
       .post("http://localhost:5000/api/cards/putCardForTrade", {
         cardId: selectedCard._id,
-        price: price,
       })
       .then((res) => res.data)
       .then((res) => {
@@ -215,31 +214,15 @@ export default function MyCards() {
                       <Typography variant="h6" mt={1} textAlign="center">
                         Sell Now Price: {selectedCard?.price}
                       </Typography>
-                      <Typography variant="body1" mt={1} textAlign="center">
-                        Set a price for your card
-                      </Typography>
-
-                      <Box
-                        mt={2}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <TextField
-                          value={listPrice}
-                          onChange={(e) => setListPrice(e.target.value)}
-                          label="TCC"
-                        />
-                      </Box>
                       <Box
                         mt={4}
                         sx={{ display: "flex", justifyContent: "space-around" }}
                       >
                         <Button
-                          onClick={() =>
-                            handleTradeNow(selectedCard, listPrice)
-                          }
+                          onClick={() => handleTradeNow(selectedCard)}
                           variant="contained"
                         >
-                          List for trade
+                          List on Trade Market
                         </Button>
                         <Button
                           onClick={handleCloseTradeIt}
@@ -311,13 +294,6 @@ export default function MyCards() {
                               justifyContent: "space-around",
                             }}
                           >
-                            <Button
-                              color="secondary"
-                              onClick={() => handleClickSellNow(card)}
-                              variant="contained"
-                            >
-                              Sell Now
-                            </Button>
                             {card.availableToTrade === "true" ? (
                               <Button
                                 color="success"
@@ -326,7 +302,7 @@ export default function MyCards() {
                                 }
                                 variant="contained"
                               >
-                                Remove From Trade List
+                                Remove From Trade Market
                               </Button>
                             ) : (
                               <Button
@@ -334,7 +310,7 @@ export default function MyCards() {
                                 onClick={() => handleClickTradeIt(card)}
                                 variant="contained"
                               >
-                                Trade It
+                                List on Trade Market
                               </Button>
                             )}
                           </Box>

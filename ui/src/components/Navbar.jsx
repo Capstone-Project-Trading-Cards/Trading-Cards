@@ -79,7 +79,11 @@ export default function Navbar(props) {
     navigate("/login");
   }
 
-  function handleGetMoreCoins() {
+  function handleAddFunds() {
+    navigate("/addFunds");
+  }
+
+  function handleBuyCoins() {
     navigate("/buyCoins");
   }
 
@@ -125,35 +129,19 @@ export default function Navbar(props) {
                   href="/cards"
                   variant="contained"
                 >
-                  Cards
+                  Buy Cards
                 </Button>
               </li>
               <li className="m-1">
-                <Button href="/packs" variant="contained">
-                  Packs
-                </Button>
-              </li>
-              <li className="m-1">
-                <Button href="/" variant="contained">
-                  Trades
+                <Button
+                  sx={{ backgroundColor: "#1565C0" }}
+                  href="/buyCoins"
+                  variant="contained"
+                >
+                  Buy Coins
                 </Button>
               </li>
             </ul>
-          </div>
-          <div className="ml-auto m-1">
-            <form className="form-inline my-2 my-lg-0">
-              <div className="d-flex m-1">
-                <input
-                  className="form-control mr-sm-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <Button variant="contained" type="submit">
-                  Search
-                </Button>
-              </div>
-            </form>
           </div>
         </div>
         <div>
@@ -214,12 +202,16 @@ export default function Navbar(props) {
                       </MenuItem>
                       <MenuItem onClick={handleClose} disableRipple>
                         <EditIcon />
-                        Trade Requests 1
+                        Trade Offers
                       </MenuItem>
                       <Divider sx={{ my: 0.5 }} />
-                      <MenuItem disableRipple onClick={handleGetMoreCoins}>
+                      <MenuItem disableRipple onClick={handleAddFunds}>
                         <MonetizationOnIcon />
-                        Get More Coins
+                        Add Funds
+                      </MenuItem>
+                      <MenuItem disableRipple onClick={handleBuyCoins}>
+                        <MonetizationOnIcon />
+                        Buy Coins
                       </MenuItem>
                       <MenuItem onClick={handleLogout} disableRipple>
                         <LogoutIcon />

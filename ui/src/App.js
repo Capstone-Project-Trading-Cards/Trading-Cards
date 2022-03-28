@@ -20,6 +20,7 @@ import Trades from "./pages/Trades";
 import TradeCard from "./pages/TradeCard";
 import MyCards from "./pages/MyCards";
 import AddFunds from "./pages/AddFunds";
+import TradeOffers from "./pages/TradeOffers";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
         <Route path="/trades/:cardId" element={<TradeCard />} />
         <Route path="/myCards" element={<MyCards />} />
         <Route path="/addFunds" element={<AddFunds />} />
+        <Route path="/tradeOffers" element={<TradeOffers />} />
       </Routes>
     </BrowserRouter>
   );

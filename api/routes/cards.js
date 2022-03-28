@@ -113,13 +113,13 @@ router.get("/:cardId/buy/:ownerId", async (req, res) => {
 
 router.post("/sell", async (req, res) => {
   try {
-    await Card.findOneAndDelete(req.body.cardId);
-    const card = await Card.findOne(req.body.cardId);
+    const card = await Card.findById(req.body.cardId);
     const user = await User.findById(req.body.userId);
     const newUserBalance = user.coinBalance + card.price;
     await User.findByIdAndUpdate(user._id, {
       $set: { coinBalance: newUserBalance },
     });
+    await Card.findByIdAndDelete(req.body.cardId);
     res.send(`Card is sold`);
   } catch (err) {
     console.log(err);
@@ -165,6 +165,25 @@ router.get(`/userCollection/:userId`, async (req, res) => {
   }
 });
 
+// buy card from trades
+router.get("/:cardId/buyTrades/:ownerId", async (req, res) => {
+  try {
+    const card = await Card.findById(req.params.cardId);
+    const user = await User.findById(req.params.ownerId);
+    card.owner = req.params.ownerId;
+    const newUserBalance = user.coinBalance - card.price;
+    await Card.findByIdAndUpdate(req.params.cardId, {
+      $set: { owner: req.params.ownerId, availableToTrade: "false" },
+    });
+    await User.findByIdAndUpdate(req.params.ownerId, {
+      $set: { coinBalance: newUserBalance },
+    });
+    res.status(200).send(`Card bought`);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
 /*
 // add card to the collection
 // basically change the ownership of the card
