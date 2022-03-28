@@ -73,7 +73,7 @@ export default function TradeCard() {
     console.log(`Card Data ${cardData} offered card ${chosenCard}`);
     axios
       .post("http://localhost:5000/api/trades/offer", {
-        offerFrom: user._id,
+        offerFrom: user?._id,
         offerTo: cardData.owner,
         offeredCard: chosenCard,
         wantedCard: cardData,

@@ -26,12 +26,52 @@ import Silvers from "../images/Silver-Card.png";
 import Golds from "../images/pack-background4.png";
 import Platinum from "../images/Platinium-Card.png";
 import Diamonds from "../images/pack-background2.png";
+import { useNavigate } from "react-router";
 
 export default function TradeOffers() {
   const [cardData, setCardData] = useState([{}]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState();
   const [buttonClicked, setButtonClicked] = useState(false);
+
+  const navigate = useNavigate();
+
+  const acceptOffer = (
+    offerFrom,
+    offerTo,
+    tradeId,
+    wantedCard,
+    offeredCard
+  ) => {
+    axios
+      .post("http://localhost:5000/api/trades/acceptOffer", {
+        offerFrom: offerFrom,
+        offerTo: offerTo,
+        tradeId: tradeId,
+        wantedCard: wantedCard,
+        offeredCard: offeredCard,
+      })
+      .then((res) => res.data)
+      .then((res) => {
+        console.log(res);
+        setButtonClicked(!buttonClicked);
+        navigate("/myCards");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const refuseOffer = (tradeId) => {
+    axios
+      .post("http://localhost:5000/api/trades/refuseOffer", {
+        tradeId: tradeId,
+      })
+      .then((res) => res.data)
+      .then((res) => {
+        console.log(res);
+        setButtonClicked(!buttonClicked);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleDelete = (cardId) => {
     axios
@@ -69,7 +109,7 @@ export default function TradeOffers() {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [buttonClicked]);
   return (
     <Box
       sx={{
@@ -135,7 +175,11 @@ export default function TradeOffers() {
                             >
                               <CardHeader
                                 title={`${offer.wantedCard?.firstname} ${offer.wantedCard?.lastname} - Value: ${offer.wantedCard?.price}`}
-                                subheader={`Owner: ${offer.wantedCard?.owner}`}
+                                subheader={`Owner: ${
+                                  offer.wantedCard?.owner === user?._id
+                                    ? "You"
+                                    : offer.wantedCard?.owner
+                                }`}
                               ></CardHeader>
                               <Box m={4}>
                                 {offer.owner === user?._id ? (
@@ -206,13 +250,23 @@ export default function TradeOffers() {
                       </Grid>
                       <Box sx={{ display: "flex", flexDirection: "column" }}>
                         {offer.offerFrom === user?._id ? (
-                          <Button>
+                          <Button onClick={() => refuseOffer(offer._id)}>
                             <CancelIcon
                               sx={{ color: "white", fontSize: "40px" }}
                             />
                           </Button>
                         ) : (
-                          <Button>
+                          <Button
+                            onClick={() =>
+                              acceptOffer(
+                                offer.offerFrom,
+                                offer.offerTo,
+                                offer._id,
+                                offer.wantedCard,
+                                offer.offeredCard
+                              )
+                            }
+                          >
                             <ThumbUpAltIcon
                               sx={{ color: "white", fontSize: "40px" }}
                             />
@@ -242,7 +296,7 @@ export default function TradeOffers() {
                         {offer.offerFrom === user?._id ? (
                           ""
                         ) : (
-                          <Button>
+                          <Button onClick={() => refuseOffer(offer._id)}>
                             <ThumbDownAltIcon
                               sx={{ color: "white", fontSize: "40px" }}
                             />
