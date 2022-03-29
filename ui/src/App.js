@@ -21,6 +21,7 @@ import TradeCard from "./pages/TradeCard";
 import MyCards from "./pages/MyCards";
 import AddFunds from "./pages/AddFunds";
 import TradeOffers from "./pages/TradeOffers";
+import AdminReports from "./pages/AdminReports";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Homepage />} />
         <Route exact path="/cards" element={<AllCards />} />
+        <Route exact path="/admin" element={<AdminReports />} />
         <Route exact path="/cards/:cardId" element={<Card />} />
         <Route path="/about" element={<About />} />
         <Route path="/addCard" element={<AddCardForm />} />

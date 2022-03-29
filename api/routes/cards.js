@@ -35,7 +35,9 @@ router.get("/trades", async (req, res) => {
 // get all the cards on the homepage
 router.get("/", async (req, res) => {
   try {
-    const cards = await Card.find({ owner: { $eq: "TCC" } });
+    const cards = await Card.find({ owner: { $eq: "TCC" } }).sort({
+      createdAt: -1,
+    });
     res.status(200).send(cards);
   } catch (err) {
     res.status(500).send(err);
@@ -184,6 +186,15 @@ router.get("/:cardId/buyTrades/:ownerId", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+router.get("/getTotalCardValue", async (req, res) => {
+  const cardValue = await Card.aggregate({
+    $group: { _id: null, amount: { $sum: "$price" } },
+  });
+  console.log(cardValue.amount);
+  res.send(cardValue.amount);
+});
+
 /*
 // add card to the collection
 // basically change the ownership of the card

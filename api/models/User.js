@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const CardSchema = require('./Card').CardSchema
+const CardSchema = require("./Card").CardSchema;
 
 const UserSchema = mongoose.Schema(
   {
@@ -11,7 +11,8 @@ const UserSchema = mongoose.Schema(
     img: { type: String },
     coinBalance: { type: Number, default: 0 },
     moneyBalance: { type: Number, default: 0 },
-    cards: [CardSchema]
+    cards: [CardSchema],
+    banned: { type: String, default: "false" },
   },
   { timestamps: true }
 );
