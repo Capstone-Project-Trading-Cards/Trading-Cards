@@ -279,9 +279,10 @@ export default function TradeOffers() {
                         >
                           In
                         </Typography>
-                        <ArrowBackIcon
+                        <ArrowForwardIcon
                           sx={{ color: "green", fontSize: "80px" }}
                         />
+
                         <Divider sx={{ color: "white" }} />
                         <Typography
                           variant="h5"
@@ -290,7 +291,7 @@ export default function TradeOffers() {
                         >
                           Out
                         </Typography>
-                        <ArrowForwardIcon
+                        <ArrowBackIcon
                           sx={{ color: "red", fontSize: "80px" }}
                         />
                         {offer.offerFrom === user?._id ? (

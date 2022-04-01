@@ -65,13 +65,12 @@ export default function EditProfile() {
 
   const handleSubmit = () => {
     const formData = new FormData();
-    formData.append("username", username);
     formData.append("email", email);
     formData.append("image", image);
     axios
-      .post("", formData)
+      .post(`http://localhost:5000/api/user/profile/${user?._id}`, formData)
       .then((res) => res.data)
-      .then((res) => {})
+      .then((res) => console.log(res))
       .catch((err) => setIsError(err));
   };
 
@@ -93,10 +92,12 @@ export default function EditProfile() {
         if (data.isLoggedIn) {
           setUser(data.user);
           setIsLoggedIn(true);
+          setEmail(user?.email);
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [user?.username]);
+
   return (
     <Box
       sx={{
@@ -192,6 +193,7 @@ export default function EditProfile() {
                             type="text"
                             value={user?.username}
                             onChange={(e) => setUsername(e.target.value)}
+                            disabled
                             placeholder="Username"
                             margin="normal"
                             sx={{ backgroundColor: "white" }}
@@ -200,7 +202,7 @@ export default function EditProfile() {
                         <FormControl>
                           <TextField
                             type="text"
-                            value={user?.email}
+                            value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Email Address"
                             margin="normal"
