@@ -15,15 +15,4 @@ const PackOpened = mongoose.Schema({
     }
 })
 
-const CoinsBought = mongoose.Schema({
-    username: String,
-    numCoins: Number,
-    date: Date
-})
-
-const CountingData = mongoose.Schema({
-    dataType: String,
-    count: Number,
-})
-
 module.exports = mongoose.model("PackOpened", PackOpened)

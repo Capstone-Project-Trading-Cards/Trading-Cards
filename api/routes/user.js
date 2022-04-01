@@ -2,6 +2,7 @@ const router = require("express").Router();
 const { findByIdAndUpdate } = require("../models/User");
 const User = require("../models/User");
 const Card = require("../models/Card").Card;
+const PackOpened = require('../models/PackOpened')
 
 // schema test
 User.schema.static.adjustUserBalance = function (
@@ -76,12 +77,6 @@ router.post("/collection/add", async (req, res) => {
     ).exec();
 
     user = updatedUser.toObject();
-
-    //console.log("Card collection",  user.cardCollection)
-    //console.log(user["cardCollection"])
-    //console.log(user.cardCollection.length)
-    //user = updatedUser.toObject()
-    //console.log(user)
     console.log(user.cards.length);
     res.status(200).send("Card Added");
   }
@@ -154,6 +149,8 @@ router.get("/getAllUsers", async (req, res) => {
     res.send(err);
   }
 });
+
+
 
 router.post("/banUser", async (req, res) => {
   try {

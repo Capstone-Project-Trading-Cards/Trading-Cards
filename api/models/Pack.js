@@ -15,6 +15,10 @@ const PackSchema = mongoose.Schema({
         type: Number,
         required: true,
         min: 0
+    },
+    datecreated: {
+        type: Date,
+        required: true
     }
 
 });

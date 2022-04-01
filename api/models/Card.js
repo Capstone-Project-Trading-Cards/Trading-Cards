@@ -25,6 +25,7 @@ const CardSchema = new Schema({
   availableToTrade: { type: String, default: "false" },
   pack: { type: String, required: true },
   owner: { type: String, default: "TCC" },
+  datecreated: {type: Date, required: true}
 });
 
 module.exports = {
