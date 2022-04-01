@@ -141,6 +141,15 @@ export default function Navbar(props) {
                   Buy Coins
                 </Button>
               </li>
+              <li className="m-1">
+                <Button
+                  sx={{ backgroundColor: "#1565C0" }}
+                  href="/chat"
+                  variant="contained"
+                >
+                  Chat
+                </Button>
+              </li>
             </ul>
           </div>
         </div>
@@ -196,11 +205,17 @@ export default function Navbar(props) {
                         <PersonIcon />
                         Profile
                       </MenuItem>
-                      <MenuItem onClick={handleClose} disableRipple>
+                      <MenuItem
+                        onClick={() => navigate("/myCards")}
+                        disableRipple
+                      >
                         <CollectionsIcon />
                         My Collection
                       </MenuItem>
-                      <MenuItem onClick={handleClose} disableRipple>
+                      <MenuItem
+                        onClick={() => navigate("/tradeOffers")}
+                        disableRipple
+                      >
                         <EditIcon />
                         Trade Offers
                       </MenuItem>

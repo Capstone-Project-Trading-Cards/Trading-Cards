@@ -22,6 +22,7 @@ import MyCards from "./pages/MyCards";
 import AddFunds from "./pages/AddFunds";
 import TradeOffers from "./pages/TradeOffers";
 import AdminReports from "./pages/AdminReports";
+import Chat from "./pages/Chat";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
         <Route path="/myCards" element={<MyCards />} />
         <Route path="/addFunds" element={<AddFunds />} />
         <Route path="/tradeOffers" element={<TradeOffers />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </BrowserRouter>
   );

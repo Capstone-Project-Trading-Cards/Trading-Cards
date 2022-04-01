@@ -159,32 +159,6 @@ export default function Profile() {
                 </Box>
               </Box>
             </Box>
-            <Box mt={4} className={classes.infoBlock}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                  margin: "20px",
-                }}
-              >
-                <Button color="secondary" size="small" variant="contained">
-                  Banned Users
-                </Button>
-                <img width="40px" src={IconPicture2} />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                  margin: "20px",
-                }}
-              >
-                <Button color="secondary" size="small" variant="contained">
-                  Trade History
-                </Button>
-                <img src={HistoryIcon} width="40px" />
-              </Box>
-            </Box>
           </Box>
         </Box>
         <Footer />

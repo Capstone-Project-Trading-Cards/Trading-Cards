@@ -15,11 +15,25 @@ const tradesRoute = require("./routes/trades");
 
 // server setup
 const app = express();
+
 dotenv.config();
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileupload());
+const http = require("http").Server(app);
+const io = require("socket.io")(http, {
+  cors: {
+    origin: "*",
+  },
+});
+
+io.on("connection", (socket) => {
+  socket.on("message", ({ name, message }) => {
+    io.emit("message", { name, message });
+    console.log(`${message} ${name}`);
+  });
+});
 
 const dbURI = process.env.MONGO_DB;
 
@@ -36,9 +50,9 @@ app.use("/", auth);
 app.use("/api/packs", packRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/trades", tradesRoute);
-
 app.use("/", auth);
+
 // creating server
-app.listen(process.env.PORT || 5000, () =>
-  console.log("Server is running on Port 5000")
+http.listen(process.env.PORT || 5000, () =>
+  console.log("Express server is running on Port 5000")
 );
