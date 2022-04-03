@@ -19,6 +19,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router";
 
 export default function Homepage() {
   const [cardData, setCardData] = useState([{}]);
@@ -28,6 +29,8 @@ export default function Homepage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState();
   const [buttonClicked, setButtonClicked] = useState(false);
+
+  const navigate = useNavigate()
 
   let totalCardPrice = 0;
   let totalPack = 0;
@@ -92,8 +95,9 @@ export default function Homepage() {
       })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
-        console.log(data.isLoggedIn);
+        if(!data.user.isAdmin) {
+          navigate('/dashboard')
+        }
         if (data.isLoggedIn) {
           setUser(data.user);
           setIsLoggedIn(true);

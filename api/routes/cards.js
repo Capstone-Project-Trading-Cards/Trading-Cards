@@ -6,6 +6,7 @@ const UserCollection = require("../models/UserCollection");
 const User = require("../models/User");
 const path = require("path");
 const Pack = require("../models/Pack");
+const { Console } = require("console");
 const ObjectId = require("mongodb").ObjectId;
 // Sets up where to store POST images
 const storage = multer.diskStorage({
@@ -65,6 +66,7 @@ router.get("/pack/:id", async (req, res) => {
 router.post("/add", (req, res) => {
   console.log(req.body);
   const newCard = new Card(req.body);
+  newCard.datecreated = new Date()
   try {
     const savedCard = newCard.save();
     res.status(200).send(savedCard);
@@ -72,6 +74,25 @@ router.post("/add", (req, res) => {
     res.status(500).send(err);
   }
 });
+
+// get cards by names
+router.get("/:name", async (req, res) => {
+  const cardName = req.params.name
+  let regex = new RegExp("/" + cardName + "/")
+  try {
+    let cards = await Card.find({
+      $or: [
+        {$regex: {firstname: regex}},
+        {$regex: {lastname: regex}},
+      ]
+    })
+    res.status(200).send(cards);
+  } catch (err) {
+    console.log(' new error')
+    console.log(err)
+    res.status(500).send(err);
+  }
+})
 
 // show card
 router.get("/:id", async (req, res) => {

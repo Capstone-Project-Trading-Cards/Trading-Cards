@@ -47,6 +47,9 @@ export default function AddPackForm() {
         console.log(data);
         console.log(data.isLoggedIn);
         if (data.isLoggedIn) {
+          if(!data.user.isAdmin) {
+            navigate('/dashboard')
+          }
           setUser(data.user);
           setIsLoggedIn(true);
         } else {
