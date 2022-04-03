@@ -163,7 +163,57 @@ export default function Homepage() {
           alt="background"
         />
         <Box sx={{ position: "relative" }} mb={2}>
-          <Typography mt={4} variant="h3" color="white" textAlign="center">
+          <Box mt={4}>
+            <Typography textAlign="center" color="white" variant="h3">
+              Admin Actions
+            </Typography>
+            <Box
+              mt={4}
+              sx={{ display: "flex", justifyContent: "space-around" }}
+            >
+              <Card>
+                <Box>
+                  <Typography variant="h5" textAlign="center">
+                    Create a Pack
+                  </Typography>
+                  <Button href="/addPack" variant="contained">
+                    Click here to Navigate
+                  </Button>
+                </Box>
+              </Card>
+              <Card>
+                <Box>
+                  <Typography variant="h5" textAlign="center">
+                    Create a Card
+                  </Typography>
+                  <Button href="/addCard" variant="contained">
+                    Click here to Navigate
+                  </Button>
+                </Box>
+              </Card>
+              <Card>
+                <Box>
+                  <Typography variant="h5" textAlign="center">
+                    Add Announcement
+                  </Typography>
+                  <Button href="/addAnnouncement" variant="contained">
+                    Click here to Navigate
+                  </Button>
+                </Box>
+              </Card>
+              <Card>
+                <Box>
+                  <Typography variant="h5" textAlign="center">
+                    Announcements
+                  </Typography>
+                  <Button href="/announcements" variant="contained">
+                    Click here to Navigate
+                  </Button>
+                </Box>
+              </Card>
+            </Box>
+          </Box>
+          <Typography mt={6} variant="h3" color="white" textAlign="center">
             Admin Reports
           </Typography>
           <Grid
