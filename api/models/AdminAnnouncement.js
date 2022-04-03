@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { stringify } = require("uuid");
 
 const AdminAnnouncement = mongoose.Schema({
     username: {
@@ -7,7 +6,7 @@ const AdminAnnouncement = mongoose.Schema({
         required: true
     },
     title: {
-        type: stringify,
+        type: String,
         required: true
     },
     message: {

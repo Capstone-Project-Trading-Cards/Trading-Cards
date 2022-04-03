@@ -55,6 +55,7 @@ router.get("/:packid", async (req, res) => {
 router.post("/addPack", async (req, res) => {
   try {
     const pack = new Pack(req.body);
+    pack.datecreated = new Date()
     console.log(pack);
     const newPack = pack.save();
     res.status(200).send("Pack created");

@@ -111,7 +111,7 @@ router.get('/recentcards', async (req, res) => {
 // admin anncouncements routes
 
 // add anncounment
-router.post('/announcements/add', (req, res) => {
+router.post('/announcements/add', async (req, res) => {
     const newAccouncement = new AdminAnnouncement(req.body)
     try {
         const savedAnnoucement = await newAccouncement.save()
@@ -122,7 +122,7 @@ router.post('/announcements/add', (req, res) => {
 })
 
 // get all announcements, sort by date
-router.get('/annoucements', (req, res) => {
+router.get('/annoucements', async (req, res) => {
     try{
         const anncouncements = await AdminAnnouncement.find().sort({datecreated: 'desc'})
         res.send(anncouncements)
@@ -132,7 +132,7 @@ router.get('/annoucements', (req, res) => {
 })
 
 // get announcements to display on page
-router.get('/annoucements/display', (req, res) => {
+router.get('/annoucements/display', async (req, res) => {
     try{
         const anncouncements = await AdminAnnouncement.find().sort({datecreated: 'desc', isVisible: true})
         res.send(anncouncements)
@@ -142,7 +142,7 @@ router.get('/annoucements/display', (req, res) => {
 })
 
 // hide/unhide accouncement (toggle it)
-router.get('accouncements/:id/toggle', (req, res) => {
+router.get('accouncements/:id/toggle', async (req, res) => {
     try{
         const annId = req.params.id
         const announcement = await AdminAnnouncement.findById(annId)
