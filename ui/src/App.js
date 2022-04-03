@@ -23,6 +23,8 @@ import AddFunds from "./pages/AddFunds";
 import TradeOffers from "./pages/TradeOffers";
 import AdminReports from "./pages/AdminReports";
 import Chat from "./pages/Chat";
+import NewAnnouncement from "./pages/NewAnouncement";
+import Announcement from "./pages/Announcements";
 
 function App() {
   return (
@@ -51,6 +53,8 @@ function App() {
         <Route path="/addFunds" element={<AddFunds />} />
         <Route path="/tradeOffers" element={<TradeOffers />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/addAnnouncement" element={<NewAnnouncement />} />
+        <Route path="/announcements" element={<Announcement />} />
       </Routes>
     </BrowserRouter>
   );

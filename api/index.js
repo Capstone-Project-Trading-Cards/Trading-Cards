@@ -53,6 +53,12 @@ app.use("/api/trades", tradesRoute);
 app.use("/", auth);
 
 // creating server
+/*
+app.listen(process.env.PORT || 5000, () =>
+  console.log("Express server is running on Port 5000")
+);
+*/
+
 http.listen(process.env.PORT || 5000, () =>
   console.log("Express server is running on Port 5000")
 );

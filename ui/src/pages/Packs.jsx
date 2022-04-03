@@ -48,8 +48,6 @@ export default function Packs() {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleSubmit = () => {};
-
   return (
     <Box
       sx={{
@@ -60,13 +58,6 @@ export default function Packs() {
       }}
     >
       <Navbar user={user} isLoggedIn={isLoggedIn} />
-      {isAdmin ? (
-        <Box>
-          <Button>Add Pack</Button>
-        </Box>
-      ) : (
-        ""
-      )}
       <Box
         container
         mb={6}
@@ -100,7 +91,7 @@ export default function Packs() {
               Buy Packs
             </Typography>
             <Typography variant="body2" mt={2} textAlign="center" color="white">
-              Add More Cards to Your Collection!
+              Open packs and get 5 random cards per pack!
             </Typography>
           </Box>
           <Box>
@@ -126,7 +117,6 @@ export default function Packs() {
         </Box>
         <Box
           component="form"
-          onSubmit={handleSubmit}
           sx={{ display: "flex", justifyContent: "center", width: "100%" }}
         >
           <Box sx={{ zIndex: 1, width: "95%" }} mt={6}>

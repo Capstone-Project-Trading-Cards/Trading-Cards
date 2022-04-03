@@ -150,6 +150,15 @@ export default function Navbar(props) {
                   Chat
                 </Button>
               </li>
+              <li className="m-1">
+                <Button
+                  sx={{ backgroundColor: "#1565C0" }}
+                  href="/announcements"
+                  variant="contained"
+                >
+                  Announcements
+                </Button>
+              </li>
             </ul>
           </div>
         </div>
@@ -180,7 +189,9 @@ export default function Navbar(props) {
                 >
                   {props.user.isAdmin ? (
                     <>
-                      <MenuItem>Admin Dashboard</MenuItem>
+                      <MenuItem onClick={() => navigate("/admin")}>
+                        Admin Dashboard
+                      </MenuItem>
                       <MenuItem onClick={() => navigate("/addCard")}>
                         <AddIcon />
                         Add Card

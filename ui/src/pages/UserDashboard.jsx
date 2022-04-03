@@ -76,7 +76,7 @@ export default function UserDashboard() {
             position: "fixed",
             left: 0,
             top: 0,
-            width: "100%",
+            width: "99vw",
             height: "auto",
             zIndex: 0,
             margin: 0,

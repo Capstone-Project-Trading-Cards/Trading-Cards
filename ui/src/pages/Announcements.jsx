@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Card, Typography } from "@mui/material";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
 import Footer from "../components/Footer";
-import { useLocation } from "react-router";
 
-export default function Showcase() {
-  const [cardData, setCardData] = useState([{}]);
+export default function Announcement() {
+  const [data, setData] = useState([{}]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState();
 
-  const location = useLocation();
-
   useEffect(() => {
-    console.log(location.pathname.split("/")[[2]]);
-    // get cards
-    axios.get("/");
+    // get announcements
+    axios
+      .get("http://localhost:5000/api/admin/annoucements")
+      .then((res) => res.data)
+      .then((res) => {
+        setData(res);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
     // get user
     axios
       .get("/api/getUsername", {
@@ -34,34 +37,7 @@ export default function Showcase() {
         }
       })
       .catch((err) => console.log(err));
-    /*
-    axios
-      .post(
-        `http://localhost:5000/api/packs/showcase/${
-          location.pathname.split("/")[[2]]
-        }`,
-        user?._id
-      )
-      .then((res) => res.data)
-      .then((res) => {
-        setCardData(res);
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-      */
-    axios
-      .get(
-        `http://localhost:5000/api/packs/${
-          location.pathname.split("/")[[2]]
-        }/open/${5}`
-      )
-      .then((res) => res.data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
   }, []);
-
   return (
     <Box
       sx={{
@@ -92,10 +68,36 @@ export default function Showcase() {
           alt="background"
         />
         <Box sx={{ position: "relative" }} mb={2}>
-          <Typography>Page Content Goes Here...</Typography>
-          {cardData.map((card) => (
-            <Typography color="white">{card.name}</Typography>
-          ))}
+          <Typography mt={4} color="white" textAlign="center" variant="h3">
+            Announcements
+          </Typography>
+          <Box mt={4} sx={{ display: "flex", justifyContent: "center" }}>
+            {data.map((d) => (
+              <Card
+                mt={2}
+                sx={{
+                  padding: "10px",
+                  width: "50vw",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography>Title: {d.title}</Typography>
+                  <Typography>By Admin: {d.username}</Typography>
+                  <Typography>{d.message}</Typography>
+                  <Typography>
+                    Created At: {d.createdAt?.split("T")[0]}
+                  </Typography>
+                </Box>
+              </Card>
+            ))}
+          </Box>
         </Box>
         <Footer />
       </Box>

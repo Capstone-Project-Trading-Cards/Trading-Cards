@@ -93,6 +93,7 @@ router.get("/:packid/open/:cardnum", async (req, res) => {
         .send({ err: `Not enough cards in pack to open ${numCards} cards` });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 });
