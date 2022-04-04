@@ -161,7 +161,9 @@ export default function Chat() {
                       sx={{ backgroundColor: "white" }}
                     />
                   </Box>
-                  <Button type="submit">Send Message</Button>
+                  <Button variant="contained" type="submit">
+                    Send Message
+                  </Button>
                 </form>
               </Box>
             </Box>

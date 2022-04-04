@@ -47,8 +47,8 @@ export default function AddPackForm() {
         console.log(data);
         console.log(data.isLoggedIn);
         if (data.isLoggedIn) {
-          if(!data.user.isAdmin) {
-            navigate('/dashboard')
+          if (!data.user.isAdmin) {
+            navigate("/dashboard");
           }
           setUser(data.user);
           setIsLoggedIn(true);
@@ -71,7 +71,10 @@ export default function AddPackForm() {
         price: price,
       })
       .then((res) => res.data)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        navigate("/packs");
+      })
       .catch((err) => console.log(err));
   };
 
@@ -134,6 +137,7 @@ export default function AddPackForm() {
                 <Box p={2} textAlign="center" mb={4}>
                   <FormControl>
                     <select id="tier" style={{ padding: "12px" }}>
+                      <option>Tier</option>
                       <option value="LOW">LOW</option>
                       <option value="MID">MID</option>
                       <option value="MIGH">MIGH</option>

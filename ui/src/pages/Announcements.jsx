@@ -9,6 +9,7 @@ export default function Announcement() {
   const [data, setData] = useState([{}]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState();
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     // get announcements
@@ -37,7 +38,17 @@ export default function Announcement() {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [isClicked]);
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:5000/api/admin/${id}`)
+      .then((res) => res.data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+      .finally(() => setIsClicked(!isClicked));
+  };
+
   return (
     <Box
       sx={{
@@ -71,16 +82,28 @@ export default function Announcement() {
           <Typography mt={4} color="white" textAlign="center" variant="h3">
             Announcements
           </Typography>
-          <Box mt={4} sx={{ display: "flex", justifyContent: "center" }}>
+          <Box
+            mt={4}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             {data.map((d) => (
-              <Card
+              <Box
                 mt={2}
+                mb={2}
                 sx={{
                   padding: "10px",
                   width: "50vw",
+                  backgroundColor: "white",
                 }}
               >
                 <Box
+                  mt={2}
+                  mb={2}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -94,8 +117,17 @@ export default function Announcement() {
                   <Typography>
                     Created At: {d.createdAt?.split("T")[0]}
                   </Typography>
+                  <Box mt={2}>
+                    <Button
+                      onClick={() => handleDelete(d._id)}
+                      variant="contained"
+                      color="error"
+                    >
+                      Delete
+                    </Button>
+                  </Box>
                 </Box>
-              </Card>
+              </Box>
             ))}
           </Box>
         </Box>

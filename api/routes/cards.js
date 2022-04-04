@@ -33,6 +33,18 @@ router.get("/trades", async (req, res) => {
   }
 });
 
+// show card
+router.get("/:id", async (req, res) => {
+  try {
+    const card = await Card.findById(req.params.id);
+    console.log(card);
+    res.status(200).send(card);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
 // get all the cards on the homepage
 router.get("/", async (req, res) => {
   try {
@@ -66,7 +78,7 @@ router.get("/pack/:id", async (req, res) => {
 router.post("/add", (req, res) => {
   console.log(req.body);
   const newCard = new Card(req.body);
-  newCard.datecreated = new Date()
+  newCard.datecreated = new Date();
   try {
     const savedCard = newCard.save();
     res.status(200).send(savedCard);
@@ -77,29 +89,16 @@ router.post("/add", (req, res) => {
 
 // get cards by names
 router.get("/:name", async (req, res) => {
-  const cardName = req.params.name
-  let regex = new RegExp("/" + cardName + "/")
+  const cardName = req.params.name;
+  let regex = new RegExp("/" + cardName + "/");
   try {
     let cards = await Card.find({
-      $or: [
-        {$regex: {firstname: regex}},
-        {$regex: {lastname: regex}},
-      ]
-    })
+      $or: [{ $regex: { firstname: regex } }, { $regex: { lastname: regex } }],
+    });
     res.status(200).send(cards);
   } catch (err) {
-    console.log(' new error')
-    console.log(err)
-    res.status(500).send(err);
-  }
-})
-
-// show card
-router.get("/:id", async (req, res) => {
-  try {
-    const card = await Card.findById(req.params.id);
-    res.status(200).send(card);
-  } catch (err) {
+    console.log(" new error");
+    console.log(err);
     res.status(500).send(err);
   }
 });
@@ -214,6 +213,23 @@ router.get("/getTotalCardValue", async (req, res) => {
   });
   console.log(cardValue.amount);
   res.send(cardValue.amount);
+});
+
+router.post("/addCardsToMyCollection", async (req, res) => {
+  try {
+    const cards = req.body.cards;
+    for (let card of cards) {
+      const copyCard = await Card.findById(card._id);
+      copyCard.owner = req.body.userId;
+      var id = new ObjectId();
+      copyCard._id = id;
+      await Card.insertMany(copyCard);
+    }
+    res.status(200).send(`Cards added to the collection`);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 });
 
 /*

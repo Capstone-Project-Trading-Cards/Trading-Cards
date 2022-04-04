@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import {
+  Avatar,
   Box,
   Button,
   FormControl,
@@ -12,10 +13,9 @@ import {
   Typography,
 } from "@mui/material";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
-import ProfilePicture from "../images/pack-background4.png";
-import IconPicture1 from "../images/fifa-background2.png";
-import IconPicture2 from "../images/red-card.png";
-import IconPicture3 from "../images/fifa-background6.png";
+import ProfilePicture1 from "../images/pack-background4.png";
+import ProfilePicture2 from "../images/Bronze-Card.png";
+import ProfilePicture3 from "../images/Silver-Card.png";
 import PersonIcon from "@mui/icons-material/Person";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
@@ -24,6 +24,7 @@ import HistoryIcon from "../images/history-icon.png";
 import TradeIcon from "../images/trade-ıcon.png";
 import Footer from "../components/Footer";
 import { makeStyles, useTheme } from "@mui/styles";
+import { useNavigate } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -63,16 +64,7 @@ export default function EditProfile() {
   const [image, setImage] = useState("");
   const [isError, setIsError] = useState(false);
 
-  const handleSubmit = () => {
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("image", image);
-    axios
-      .post(`http://localhost:5000/api/user/profile/${user?._id}`, formData)
-      .then((res) => res.data)
-      .then((res) => console.log(res))
-      .catch((err) => setIsError(err));
-  };
+  const navigate = useNavigate();
 
   const classes = useStyles();
   const theme = useTheme();
@@ -92,11 +84,31 @@ export default function EditProfile() {
         if (data.isLoggedIn) {
           setUser(data.user);
           setIsLoggedIn(true);
-          setEmail(user?.email);
         }
       })
+      .then(() => setEmail(user?.email))
       .catch((err) => console.log(err));
-  }, [user?.username]);
+  }, [user?.username, image]);
+
+  const clickImageButton = (id) => {
+    setImage(id);
+    console.log(`Image ${id} chosen`);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post(`http://localhost:5000/api/user/profile/${user?._id}`, {
+        img: image,
+        email: email,
+      })
+      .then((res) => res.data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => setIsError(err))
+      .finally(() => navigate("/profile"));
+  };
 
   return (
     <Box
@@ -122,7 +134,7 @@ export default function EditProfile() {
             position: "fixed",
             left: 0,
             top: 0,
-            width: "99.9vw",
+            width: "99.2vw",
             height: "auto",
             zIndex: 0,
             margin: 0,
@@ -153,31 +165,56 @@ export default function EditProfile() {
                       justifyContent: "center",
                       alignItems: "center",
                     }}
+                    component="form"
+                    onSubmit={handleSubmit}
                   >
-                    <Grid lg={8}>
-                      <img src={ProfilePicture} width="200px" />
-                      <Stack sx={{ m: 2, width: "100%" }}>
+                    <Grid item lg={11}>
+                      <img
+                        src={
+                          image === "1"
+                            ? ProfilePicture1
+                            : image === "2"
+                            ? ProfilePicture2
+                            : image === "3"
+                            ? ProfilePicture3
+                            : ""
+                        }
+                        width="200px"
+                      />
+                      <Stack sx={{ width: "100%" }}>
                         <InputLabel sx={{ color: "white" }}>
-                          Upload the Card Image
+                          Choose an Avatar
                         </InputLabel>
-                        <input
-                          type="file"
-                          name="cardImage"
-                          filename="cardImage"
-                          fileName="cardImage"
-                          onChange={(e) => setImage(e.target.files[0])}
-                          style={{ color: "white" }}
-                        />
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-around",
+                          }}
+                        >
+                          <Button
+                            onClick={() => clickImageButton("1")}
+                            variant="contained"
+                          >
+                            <img width="40px" src={ProfilePicture1} />
+                          </Button>
+                          <Button
+                            onClick={() => clickImageButton("2")}
+                            variant="contained"
+                          >
+                            <img width="40px" src={ProfilePicture2} />
+                          </Button>
+                          <Button
+                            onClick={() => clickImageButton("3")}
+                            variant="contained"
+                          >
+                            <img width="40px" src={ProfilePicture3} />
+                          </Button>
+                        </Box>
                       </Stack>
                       <Typography textAlign="center" color="white">
                         Status - {user?.isAdmin ? "Admin" : "User"}
                       </Typography>
-                      <Box
-                        sx={{ display: "flex", flexDirection: "column" }}
-                        component="form"
-                        onSubmit={handleSubmit}
-                        encType="multipart/form-data"
-                      >
+                      <Box sx={{ display: "flex", flexDirection: "column" }}>
                         {isError ? (
                           <Box>
                             <Typography variant="h6">
@@ -188,48 +225,43 @@ export default function EditProfile() {
                         ) : (
                           ""
                         )}
-                        <FormControl>
-                          <TextField
-                            type="text"
-                            value={user?.username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            disabled
-                            placeholder="Username"
-                            margin="normal"
-                            sx={{ backgroundColor: "white" }}
-                          />
-                        </FormControl>
-                        <FormControl>
-                          <TextField
-                            type="text"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Email Address"
-                            margin="normal"
-                            sx={{ backgroundColor: "white" }}
-                          />
-                        </FormControl>
-                        <Box
-                          mt={4}
-                          sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <Box>
-                            <Button type="submit" variant="contained">
-                              Save
-                            </Button>
-                          </Box>
-                          <Box>
-                            <Button
-                              type="submit"
-                              color="secondary"
-                              variant="contained"
-                              href="profile"
-                            >
-                              Cancel
-                            </Button>
+                        <Box>
+                          <Typography color="white">
+                            {user?.username ? user?.username : "no username"}
+                          </Typography>
+
+                          <FormControl>
+                            <TextField
+                              type="text"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder="Email Address"
+                              margin="normal"
+                              sx={{ backgroundColor: "white" }}
+                            />
+                          </FormControl>
+                          <Box
+                            mt={4}
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Box>
+                              <Button type="submit" variant="contained">
+                                Save
+                              </Button>
+                            </Box>
+                            <Box>
+                              <Button
+                                type="submit"
+                                color="secondary"
+                                variant="contained"
+                                href="profile"
+                              >
+                                Cancel
+                              </Button>
+                            </Box>
                           </Box>
                         </Box>
                       </Box>

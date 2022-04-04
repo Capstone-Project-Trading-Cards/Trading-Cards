@@ -78,9 +78,12 @@ export default function Card() {
       )
       .then((res) => res.data)
       .then((res) => {
+        console.log(cardData);
         setCardData(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
     // get user
     axios
       .get("/api/getUsername", {
@@ -207,17 +210,7 @@ export default function Card() {
               <Typography variant="h6" mt={1} textAlign="center">
                 Sell Now Price: {cardData?.price}
               </Typography>
-              <Typography variant="body1" mt={1} textAlign="center">
-                Set a price for your card
-              </Typography>
 
-              <Box mt={2} sx={{ display: "flex", justifyContent: "center" }}>
-                <TextField
-                  value={listPrice}
-                  onChange={(e) => setListPrice(e.target.value)}
-                  label="TCC"
-                />
-              </Box>
               <Box
                 mt={4}
                 sx={{ display: "flex", justifyContent: "space-around" }}

@@ -30,7 +30,7 @@ export default function Homepage() {
   const [user, setUser] = useState();
   const [buttonClicked, setButtonClicked] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   let totalCardPrice = 0;
   let totalPack = 0;
@@ -95,8 +95,8 @@ export default function Homepage() {
       })
       .then((res) => res.data)
       .then((data) => {
-        if(!data.user.isAdmin) {
-          navigate('/dashboard')
+        if (!data.user.isAdmin) {
+          navigate("/dashboard");
         }
         if (data.isLoggedIn) {
           setUser(data.user);
@@ -401,57 +401,6 @@ export default function Homepage() {
                           ))}
                         </TableBody>
                       </Table>
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Box>
-            </Grid>
-          </Grid>
-          <Typography variant="h4" textAlign="center" color="white">
-            Financial Information
-          </Typography>
-          <Grid container direction="row" p={8}>
-            <Grid item xs={12} sm={12} md={12} lg={12}>
-              <Box>
-                <Card sx={{ height: "30vh" }}>
-                  <Box
-                    sx={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <CardHeader
-                      title={`Financial Information`}
-                      subheader={`Total Value of Items`}
-                    ></CardHeader>
-                  </Box>
-                  <CardContent>
-                    <Box
-                      sx={{ display: "flex", justifyContent: "space-around" }}
-                    >
-                      <Box>
-                        <Typography variant="h5">Total Card Value</Typography>
-                        <Typography mt={2} textAlign="center" variant="h5">
-                          {totalCardPrice}
-                        </Typography>
-                      </Box>
-                      <Box>
-                        <Typography variant="h5">Number of Packs</Typography>
-                        <Typography mt={2} textAlign="center" variant="h5">
-                          {packData?.length}
-                        </Typography>
-                      </Box>
-                      <Box>
-                        <Typography variant="h5">Number of Users</Typography>
-                        <Typography mt={2} textAlign="center" variant="h5">
-                          {userData?.length}
-                        </Typography>
-                      </Box>
-                      <Box>
-                        <Typography variant="h5">
-                          Number of Trades In Market
-                        </Typography>
-                        <Typography mt={2} textAlign="center" variant="h5">
-                          {tradeData?.length}
-                        </Typography>
-                      </Box>
                     </Box>
                   </CardContent>
                 </Card>

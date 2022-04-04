@@ -16,6 +16,7 @@ export default function Packs() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState();
   const [buttonValue, setButtonValue] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     // get packs
@@ -46,7 +47,16 @@ export default function Packs() {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [isClicked]);
+
+  const deletePack = (id) => {
+    axios
+      .delete(`http://localhost:5000/api/packs/${id}`)
+      .then((res) => res.data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+      .finally(() => setIsClicked(!isClicked));
+  };
 
   return (
     <Box
@@ -159,6 +169,17 @@ export default function Packs() {
                   >
                     {pack.name}
                   </Button>
+                  {user?.isAdmin && (
+                    <Box mt={2}>
+                      <Button
+                        color="error"
+                        variant="contained"
+                        onClick={() => deletePack(pack._id)}
+                      >
+                        Delete {pack.name}
+                      </Button>
+                    </Box>
+                  )}
                 </Box>
               ))}
             </Box>

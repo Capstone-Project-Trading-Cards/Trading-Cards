@@ -55,7 +55,7 @@ router.get("/:packid", async (req, res) => {
 router.post("/addPack", async (req, res) => {
   try {
     const pack = new Pack(req.body);
-    pack.datecreated = new Date()
+    pack.datecreated = new Date();
     console.log(pack);
     const newPack = pack.save();
     res.status(200).send("Pack created");
@@ -64,9 +64,20 @@ router.post("/addPack", async (req, res) => {
   }
 });
 
-router.get("/:packid/open/:cardnum", async (req, res) => {
+// delete pack
+router.delete("/:id", async (req, res) => {
+  try {
+    await Pack.findByIdAndDelete(req.params.id);
+    res.status(200).send(`Pack: ${req.params.id} has been deleted`);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+router.post("/:packid/open/:cardnum", async (req, res) => {
   try {
     // get username :(
+    const user = await User.findOne({ username: req.body.username });
     // get pack and card numbers
     const pack = await Pack.findById(req.params.packid);
     const numCards = req.params.cardnum;
@@ -74,6 +85,11 @@ router.get("/:packid/open/:cardnum", async (req, res) => {
     const allCards = await Card.find({ pack: pack.name });
     const cardsToSend = [];
     const cardLength = allCards.length;
+
+    const newUserBalance = user.coinBalance - pack.price;
+    await User.findByIdAndUpdate(user._id, {
+      $set: { coinBalance: newUserBalance },
+    });
     // get a random card from all the cards in pack, send those cards, are duplicates
     if (cardLength >= numCards) {
       for (let i = 0; i < numCards; i++) {
@@ -84,6 +100,7 @@ router.get("/:packid/open/:cardnum", async (req, res) => {
       const packOpened = new PackOpened({
         packname: pack.name,
         dateopened: new Date(),
+        username: req.body.username,
       });
       await packOpened.save();
 

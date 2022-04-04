@@ -14,6 +14,9 @@ import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import HistoryIcon from "../images/history-icon.png";
 import TradeIcon from "../images/trade-ıcon.png";
 import Footer from "../components/Footer";
+import ProfilePicture1 from "../images/pack-background4.png";
+import ProfilePicture2 from "../images/Bronze-Card.png";
+import ProfilePicture3 from "../images/Silver-Card.png";
 import { makeStyles, useTheme } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -96,7 +99,7 @@ export default function Profile() {
             position: "fixed",
             left: 0,
             top: 0,
-            width: "99.9vw",
+            width: "99.2vw",
             height: "auto",
             zIndex: 0,
             margin: 0,
@@ -116,11 +119,22 @@ export default function Profile() {
                   mt={2}
                   sx={{ display: "flex", justifyContent: "flex-start" }}
                 >
-                  <Button href="editProfile" size="small" variant="contained">
+                  <Button href="/editProfile" size="small" variant="contained">
                     Edit Profile
                   </Button>
                 </Box>
-                <img src={ProfilePicture} width="200px" />
+                <img
+                  src={
+                    user?.img === "1"
+                      ? ProfilePicture1
+                      : user?.img === "2"
+                      ? ProfilePicture2
+                      : user?.img === "3"
+                      ? ProfilePicture3
+                      : ""
+                  }
+                  width="200px"
+                />
               </Box>
               <Box mt={2}>
                 <Box

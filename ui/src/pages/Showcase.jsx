@@ -1,16 +1,32 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import { Box, Button, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import BackgroundImage from "../images/page-backgrounds/stadium-image.jpg";
 import Footer from "../components/Footer";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import Bronzes from "../images/Bronze-Card.png";
+import Silvers from "../images/Silver-Card.png";
+import Golds from "../images/pack-background4.png";
+import Platinum from "../images/Platinium-Card.png";
+import Diamonds from "../images/pack-background2.png";
 
 export default function Showcase() {
   const [cardData, setCardData] = useState([{}]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState();
+  const [revealCards, setRevealCards] = useState(true);
 
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -33,34 +49,44 @@ export default function Showcase() {
           setIsLoggedIn(true);
         }
       })
-      .catch((err) => console.log(err));
-    /*
-    axios
-      .post(
-        `http://localhost:5000/api/packs/showcase/${
-          location.pathname.split("/")[[2]]
-        }`,
-        user?._id
-      )
-      .then((res) => res.data)
-      .then((res) => {
-        setCardData(res);
-        console.log(res);
+      .then(() => {
+        if (revealCards) {
+          axios
+            .post(
+              `http://localhost:5000/api/packs/${
+                location.pathname.split("/")[[2]]
+              }/open/${5}`,
+              {
+                username: user.username,
+              }
+            )
+            .then((res) => res.data)
+            .then((res) => {
+              setCardData(res);
+              console.log(res);
+              setRevealCards(false);
+            })
+            .catch((err) => console.log(err));
+        } else {
+          console.log("Cards revealed");
+        }
       })
       .catch((err) => console.log(err));
-      */
+  }, [user?.username]);
+
+  const handleAddCollection = () => {
     axios
-      .get(
-        `http://localhost:5000/api/packs/${
-          location.pathname.split("/")[[2]]
-        }/open/${5}`
-      )
+      .post("http://localhost:5000/api/cards/addCardsToMyCollection", {
+        cards: cardData,
+        userId: user._id,
+      })
       .then((res) => res.data)
       .then((res) => {
         console.log(res);
+        navigate("/myCards");
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
 
   return (
     <Box
@@ -92,10 +118,60 @@ export default function Showcase() {
           alt="background"
         />
         <Box sx={{ position: "relative" }} mb={2}>
-          <Typography>Page Content Goes Here...</Typography>
-          {cardData.map((card) => (
-            <Typography color="white">{card.name}</Typography>
-          ))}
+          <Typography variant="h3" mt={4} color="white" textAlign="center">
+            Congratulations! You've Opened
+          </Typography>
+          <Grid
+            mt={4}
+            container
+            spacing={2}
+            direction="row"
+            p={3}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+            {cardData.map((card, index) => (
+              <Grid key={card._id} item xs={12} sm={6} md={4} lg={2}>
+                <Box>
+                  <Card>
+                    <Box
+                      sx={{ display: "flex", justifyContent: "space-between" }}
+                    >
+                      <CardHeader
+                        title={`${card.firstname} ${card.lastname}`}
+                        subheader={`Price: ${card.price} - Rating ${card.rating}`}
+                      ></CardHeader>
+                    </Box>
+                    <CardContent>
+                      <Box sx={{ display: "flex", justifyContent: "center" }}>
+                        <img
+                          src={
+                            card.tier === "Bronze"
+                              ? Bronzes
+                              : card.tier === "Silver"
+                              ? Silvers
+                              : card.tier === "Gold"
+                              ? Golds
+                              : card.tier === "Platinium"
+                              ? Platinum
+                              : card.tier === "Diamond"
+                              ? Diamonds
+                              : ""
+                          }
+                          width="226px"
+                          alt="Forwards Pack"
+                        />
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Button onClick={() => handleAddCollection()} variant="contained">
+              Add Cards to My Collection
+            </Button>
+          </Box>
         </Box>
         <Footer />
       </Box>

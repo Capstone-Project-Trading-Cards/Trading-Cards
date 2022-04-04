@@ -13,11 +13,14 @@ import AddFunds from "../images/add-funds.png";
 import Market from "../images/market.png";
 
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router";
 
 export default function UserDashboard() {
   const [cardData, setCardData] = useState([{}]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState();
+
+  const navigate = useNavigate();
 
   const onOpened = () => {
     console.log("opened");
@@ -53,7 +56,9 @@ export default function UserDashboard() {
           setIsLoggedIn(true);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   return (
     <Box
@@ -76,7 +81,7 @@ export default function UserDashboard() {
             position: "fixed",
             left: 0,
             top: 0,
-            width: "99vw",
+            width: "99.9vw",
             height: "auto",
             zIndex: 0,
             margin: 0,

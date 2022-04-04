@@ -192,6 +192,10 @@ export default function Navbar(props) {
                       <MenuItem onClick={() => navigate("/admin")}>
                         Admin Dashboard
                       </MenuItem>
+                      <MenuItem onClick={() => navigate("/addAnnouncement")}>
+                        <AddIcon />
+                        Add Announcement
+                      </MenuItem>
                       <MenuItem onClick={() => navigate("/addCard")}>
                         <AddIcon />
                         Add Card
